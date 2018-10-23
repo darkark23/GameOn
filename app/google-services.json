@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "755270386954",
+    "firebase_url": "https://gameon-aa5bc.firebaseio.com",
+    "project_id": "gameon-aa5bc",
+    "storage_bucket": "gameon-aa5bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:755270386954:android:fbdcaef2a9d00ad2",
+        "android_client_info": {
+          "package_name": "br.com.daniel.gameon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "755270386954-lu2a8ehmfr16v8vuj347alvng5i7ig1t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGoCAaGpyH4TJRbHEgInN9hMMP-1H8JyE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
