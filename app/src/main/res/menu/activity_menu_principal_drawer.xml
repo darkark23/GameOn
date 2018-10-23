@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/item_amigo"
+            android:icon="@drawable/ic_amigos_24dp"
+            android:title="Amigos" />
+        <item
+            android:id="@+id/item_games"
+            android:icon="@drawable/ic_procurando_jogadores_24dp"
+            android:title="Games" />
+        <item
+            android:id="@+id/item_sessoes_jogos"
+            android:icon="@drawable/ic_sessoes_jogos_24dp"
+            android:title="Sessões de Games" />
+        <item
+            android:id="@+id/item_perfil"
+            android:icon="@drawable/ic_perfil_24dp"
+            android:title="Perfil" />
+
+        <item
+            android:id="@+id/item_sair"
+            android:icon="@drawable/ic_sair_24dp"
+            android:title="Sair" />
+    </group>
+
+    <item>
+        <menu>
+            <item
+                android:id="@+id/item_configuracaoes"
+                android:icon="@drawable/ic_configuracoes_24dp"
+                android:title="Configurações" />
+            <item
+                android:id="@+id/item_avalie"
+                android:icon="@drawable/ic_avalie_24dp"
+                android:title="Nos Avalie!" />
+        </menu>
+    </item>
+
+</menu>
