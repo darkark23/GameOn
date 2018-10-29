@@ -13,10 +13,16 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
     }
 
     public void openRegisterUser(View view){
         Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
+        startActivity( intent );
+    }
+
+    public void openMenuPrincipal(View view){
+        Intent intent = new Intent(LoginActivity.this, MenuPrincipalActivity.class);
         startActivity( intent );
     }
 }
