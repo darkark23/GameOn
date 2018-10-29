@@ -1,4 +1,4 @@
-package br.com.daniel.gameon;
+package br.com.daniel.gameon.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -7,14 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class AmigosFragment extends Fragment {
+import br.com.daniel.gameon.R;
+
+public class GamesFragment extends Fragment {
 
     View myView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        myView = inflater.inflate(R.layout.amigos_fragment,container,false);
+        myView = inflater.inflate(R.layout.games_fragment,container,false);
         return myView;
     }
 }
