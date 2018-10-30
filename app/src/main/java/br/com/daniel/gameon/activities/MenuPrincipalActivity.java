@@ -1,6 +1,7 @@
 package br.com.daniel.gameon.activities;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -95,7 +96,8 @@ public class MenuPrincipalActivity extends AppCompatActivity
             fragmentManager.beginTransaction().
                     replace(R.id.content_frame,new PerfilFragment()).commit();
         } else if (id == R.id.item_sair) {
-
+            Intent intent = new Intent(MenuPrincipalActivity.this, LoginActivity.class);
+            startActivity( intent );
         } else if (id == R.id.item_configuracaoes) {
 
         } else if (id == R.id.item_avalie) {
