@@ -10,7 +10,7 @@
 
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/userNameRegister"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -25,7 +25,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/userEmailRegister"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
@@ -36,11 +36,11 @@
         android:padding="16dp"
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@+id/editText3"
+        app:layout_constraintTop_toBottomOf="@+id/userNameRegister"
         tools:layout_editor_absoluteX="16dp" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/userPasswordRegister"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
@@ -51,7 +51,7 @@
         android:padding="16dp"
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@+id/editText4"
+        app:layout_constraintTop_toBottomOf="@+id/userEmailRegister"
         tools:layout_editor_absoluteX="16dp" />
 
     <ImageView
@@ -72,8 +72,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:background="@drawable/fundo_botao_login"
+        android:onClick="registerUser"
         android:text="cadastrar"
-        app:layout_constraintTop_toBottomOf="@+id/editText5"
+        app:layout_constraintTop_toBottomOf="@+id/userPasswordRegister"
         tools:layout_editor_absoluteX="16dp" />
 
     <TextView
