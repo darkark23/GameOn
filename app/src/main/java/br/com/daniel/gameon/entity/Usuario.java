@@ -23,8 +23,14 @@ public class Usuario {
     public Usuario(String idAutenticacao, String idImagem, String idUsuario, String idHorarios, String nomeUsuario, String nomeComlpeto, String frase) {
         this.idAutenticacao = idAutenticacao;
         this.idImagem = idImagem;
-        this.idUsuario = idUsuario;
         this.idHorarios = idHorarios;
+        this.nomeUsuario = nomeUsuario;
+        this.nomeComlpeto = nomeComlpeto;
+        this.frase = frase;
+    }
+
+    public Usuario(String idAutenticacao, String nomeUsuario, String nomeComlpeto, String frase) {
+        this.idAutenticacao = idAutenticacao;
         this.nomeUsuario = nomeUsuario;
         this.nomeComlpeto = nomeComlpeto;
         this.frase = frase;

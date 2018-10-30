@@ -22,6 +22,11 @@ public class Jogo {
         this.jogadores = jogadores;
     }
 
+    public Jogo(String nome, String descricao) {
+        this.nome = nome;
+        this.descricao = descricao;
+    }
+
     public String getIdJogo() {
         return idJogo;
     }
