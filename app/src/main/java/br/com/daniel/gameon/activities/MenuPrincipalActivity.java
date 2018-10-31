@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import br.com.daniel.gameon.fragments.AmigosFragment;
 import br.com.daniel.gameon.fragments.GamesFragment;
 import br.com.daniel.gameon.fragments.PerfilFragment;
@@ -97,8 +99,7 @@ public class MenuPrincipalActivity extends AppCompatActivity
             fragmentManager.beginTransaction().
                     replace(R.id.content_frame,new PerfilFragment()).commit();
         } else if (id == R.id.item_sair) {
-            Intent intent = new Intent(MenuPrincipalActivity.this, LoginActivity.class);
-            startActivity( intent );
+            onSignOut();
         } else if (id == R.id.item_configuracaoes) {
 
         } else if (id == R.id.item_avalie) {
@@ -108,6 +109,13 @@ public class MenuPrincipalActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void onSignOut(){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.signOut();
+        Intent intent = new Intent(MenuPrincipalActivity.this, LoginActivity.class);
+        startActivity( intent );
     }
 
 }

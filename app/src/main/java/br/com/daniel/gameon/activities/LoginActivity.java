@@ -19,10 +19,16 @@ public class LoginActivity extends AppCompatActivity {
     private EditText userLogin;
     private EditText passwordLogin;
 
+    public FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        View view = null;
+        if(checkLogUser()){
+            openMenu(view);
+        }
 
     }
 
@@ -32,12 +38,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signIn(final View view){
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         EditText userLogin = (EditText) findViewById(R.id.idUserLogin);
         EditText passwordLogin = (EditText) findViewById(R.id.idPasswordLogin);
 
-        mAuth.signInWithEmailAndPassword(userLogin.getText().toString(), passwordLogin.getText().toString())
+        this.mAuth.signInWithEmailAndPassword(userLogin.getText().toString(), passwordLogin.getText().toString())
                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>(){
 
                     @Override
@@ -52,5 +57,9 @@ public class LoginActivity extends AppCompatActivity {
     public void openMenu(View view){
         Intent intent = new Intent(LoginActivity.this, MenuPrincipalActivity.class);
         startActivity( intent );
+    }
+
+    public boolean checkLogUser(){
+        return this.mAuth.getCurrentUser() != null ? true : false;
     }
 }
