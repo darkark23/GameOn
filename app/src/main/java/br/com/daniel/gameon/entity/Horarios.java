@@ -1,28 +1,32 @@
 package br.com.daniel.gameon.entity;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Horarios {
 
     private String idHorarios;
     private String idUsuario;
-    private Calendar[] hoarios = new Calendar[7];
+    private Map<String,String> hoarios = new HashMap<>();
     private String observacao;
 
     public Horarios() {
     }
 
-    public Horarios(String idHorarios, String idUsuario, Calendar[] hoarios, String observacao) {
+    public Horarios(String idHorarios, String idUsuario, Map<String,String> hoarios, String observacao) {
         this.idHorarios = idHorarios;
         this.idUsuario = idUsuario;
         this.hoarios = hoarios;
         this.observacao = observacao;
     }
 
-    public Horarios(Calendar[] hoarios, String observacao) {
+    public Horarios(Map<String,String> hoarios, String observacao) {
         this.hoarios = hoarios;
         this.observacao = observacao;
     }
@@ -43,11 +47,11 @@ public class Horarios {
         this.idUsuario = idUsuario;
     }
 
-    public Calendar[] getHoarios() {
+    public Map<String,String> getHoarios() {
         return hoarios;
     }
 
-    public void setHoarios(Calendar[] hoarios) {
+    public void setHoarios(Map<String,String> hoarios) {
         this.hoarios = hoarios;
     }
 

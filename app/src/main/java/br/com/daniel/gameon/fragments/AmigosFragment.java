@@ -15,11 +15,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.com.daniel.gameon.R;
 import br.com.daniel.gameon.entity.Horarios;
@@ -49,8 +52,8 @@ public class AmigosFragment extends Fragment {
     }
 
     public void cargaInicial(){
-        Calendar dataInicio = null;
-        Calendar dataFinal = null;
+        Calendar dataInicio = Calendar.getInstance();
+        Calendar dataFinal = Calendar.getInstance();
         dataInicio.set(2018,01,01,20,00,00);
         dataFinal.set(2018,01,01,22,00,00);
         cadastrarUsuario(new Usuario("SBIs71HP4PZYrOdKeGAvuJDi2A53", "Usuario01", "NomeUsuario01", "Eu sou o Jogador01!"));
@@ -63,18 +66,19 @@ public class AmigosFragment extends Fragment {
         cadastrarJogo(new Jogo("Jogo03","Jogo número 03"));
         cadastrarJogo(new Jogo("Jogo04","Jogo número 04"));
         cadastrarJogo(new Jogo("Jogo05","Jogo número 05"));
-        cadastrarSessao(new Sessao("Sessão01",dataInicio,dataFinal,true));
-        cadastrarSessao(new Sessao("Sessão02",dataInicio,dataFinal,true));
-        cadastrarSessao(new Sessao("Sessão03",dataInicio,dataFinal,true));
-        cadastrarSessao(new Sessao("Sessão04",dataInicio,dataFinal,true));
-        cadastrarSessao(new Sessao("Sessão05",dataInicio,dataFinal,true));
-        Calendar[] horarios = {dateUtil.setHorario(20,00)
-                ,dateUtil.setHorario(21,00)
-                ,dateUtil.setHorario(22,00)
-                ,dateUtil.setHorario(20,00)
-                ,dateUtil.setHorario(21,00)
-                ,dateUtil.setHorario(22,00)
-                ,dateUtil.setHorario(01,00)};
+        cadastrarSessao(new Sessao("Sessão01",dataInicio.toString(),dataFinal.toString(),true));
+        cadastrarSessao(new Sessao("Sessão02",dataInicio.toString(),dataFinal.toString(),true));
+        cadastrarSessao(new Sessao("Sessão03",dataInicio.toString(),dataFinal.toString(),true));
+        cadastrarSessao(new Sessao("Sessão04",dataInicio.toString(),dataFinal.toString(),true));
+        cadastrarSessao(new Sessao("Sessão05",dataInicio.toString(),dataFinal.toString(),true));
+        Map<String,String> horarios =  new HashMap<>();
+        horarios.put("1",dateUtil.setHorario(20,00).toString());
+        horarios.put("2",dateUtil.setHorario(21,00).toString());
+        horarios.put("3",dateUtil.setHorario(22,00).toString());
+        horarios.put("4",dateUtil.setHorario(20,00).toString());
+        horarios.put("5",dateUtil.setHorario(21,00).toString());
+        horarios.put("6",dateUtil.setHorario(22,00).toString());
+        horarios.put("7",dateUtil.setHorario(01,00).toString());
         cadastrarHorarios(new Horarios(horarios,"Não jogo nos feriados"));
         cadastrarHorarios(new Horarios(horarios,"Não jogo nos feriados"));
         cadastrarHorarios(new Horarios(horarios,"Não jogo nos feriados"));

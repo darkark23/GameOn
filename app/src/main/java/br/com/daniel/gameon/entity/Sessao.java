@@ -1,5 +1,6 @@
 package br.com.daniel.gameon.entity;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -12,8 +13,8 @@ public class Sessao {
     private String idUsuarioAdministrador;
     private String idJogo;
     private String nomeSessao;
-    private Calendar dataInicio;
-    private Calendar dataFim;
+    private String dataInicio;
+    private String dataFim;
     private List<String> usuarios;
     private String ativo;
     private Boolean publico;
@@ -21,7 +22,7 @@ public class Sessao {
     public Sessao() {
     }
 
-    public Sessao(String idSessao, String idUsuarioAdministrador, String idJogo, String nomeSessao, Calendar dataInicio, Calendar dataFim, List<String> usuarios, String ativo, Boolean publico) {
+    public Sessao(String idSessao, String idUsuarioAdministrador, String idJogo, String nomeSessao, String dataInicio, String dataFim, List<String> usuarios, String ativo, Boolean publico) {
         this.idSessao = idSessao;
         this.idUsuarioAdministrador = idUsuarioAdministrador;
         this.idJogo = idJogo;
@@ -33,7 +34,7 @@ public class Sessao {
         this.publico = publico;
     }
 
-    public Sessao(String nomeSessao, Calendar dataInicio, Calendar dataFim, Boolean publico) {
+    public Sessao(String nomeSessao, String dataInicio, String dataFim, Boolean publico) {
         this.nomeSessao = nomeSessao;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
@@ -67,19 +68,19 @@ public class Sessao {
         this.idJogo = idJogo;
     }
 
-    public Calendar getDataInicio() {
+    public String getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(Calendar dataInicio) {
+    public void setDataInicio(String dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public Calendar getDataFim() {
+    public String getDataFim() {
         return dataFim;
     }
 
-    public void setDataFim(Calendar dataFim) {
+    public void setDataFim(String dataFim) {
         this.dataFim = dataFim;
     }
 
