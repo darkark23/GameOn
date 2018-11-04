@@ -8,7 +8,6 @@
     tools:context=".activities.MenuPrincipalActivity">
 
     <ImageView
-        android:id="@+id/imageView3"
         android:layout_width="404dp"
         android:layout_height="291dp"
         android:layout_marginBottom="52dp"
@@ -29,7 +28,6 @@
         app:layout_constraintVertical_bias="0.576" />
 
     <TextView
-        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Jogador 01"
@@ -75,7 +73,6 @@
         <TableRow android:gravity="center_horizontal">
 
             <TextView
-                android:id="@+id/labelDomingo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -84,7 +81,6 @@
                 tools:layout_editor_absoluteY="322dp" />
 
             <TextView
-                android:id="@+id/labelSegunda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -93,7 +89,6 @@
                 tools:layout_editor_absoluteY="322dp" />
 
             <TextView
-                android:id="@+id/labelTerca"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -102,7 +97,6 @@
                 tools:layout_editor_absoluteY="322dp" />
 
             <TextView
-                android:id="@+id/labelQuarta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -118,7 +112,6 @@
             android:gravity="center_horizontal">
 
             <TextView
-                android:id="@+id/domingoTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -127,7 +120,6 @@
                 tools:layout_editor_absoluteY="322dp" />
 
             <TextView
-                android:id="@+id/segundaTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -136,7 +128,6 @@
                 tools:layout_editor_absoluteY="322dp" />
 
             <TextView
-                android:id="@+id/tercaTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -145,7 +136,6 @@
                 tools:layout_editor_absoluteY="322dp" />
 
             <TextView
-                android:id="@+id/quartaTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -158,7 +148,6 @@
         <TableRow android:gravity="center_horizontal">
 
             <TextView
-                android:id="@+id/quintaLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -167,7 +156,6 @@
                 tools:layout_editor_absoluteY="322dp" />
 
             <TextView
-                android:id="@+id/sextaLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -176,7 +164,6 @@
                 tools:layout_editor_absoluteY="322dp" />
 
             <TextView
-                android:id="@+id/sabadoLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -192,7 +179,6 @@
             android:gravity="center_horizontal">
 
             <TextView
-                android:id="@+id/quintaTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -201,7 +187,6 @@
                 tools:layout_editor_absoluteY="322dp" />
 
             <TextView
-                android:id="@+id/sextaTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -210,7 +195,6 @@
                 tools:layout_editor_absoluteY="322dp" />
 
             <TextView
-                android:id="@+id/sabadoTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -222,7 +206,6 @@
     </TableLayout>
 
     <Button
-        android:id="@+id/editarButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

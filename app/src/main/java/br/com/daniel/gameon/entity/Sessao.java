@@ -34,8 +34,9 @@ public class Sessao {
         this.publico = publico;
     }
 
-    public Sessao(String nomeSessao, String dataInicio, String dataFim, Boolean publico) {
+    public Sessao(String nomeSessao,String idJogo, String dataInicio, String dataFim, Boolean publico) {
         this.nomeSessao = nomeSessao;
+        this.idJogo = idJogo;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.ativo = "S";
