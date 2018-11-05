@@ -11,13 +11,14 @@
         android:layout_width="404dp"
         android:layout_height="291dp"
         android:layout_marginBottom="52dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintBottom_toTopOf="@+id/imagem_usuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/side_nav_bar" />
 
     <TextView
+        android:id="@+id/nome_usuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Procurando jogadores que jogam o jogo 01"
@@ -28,6 +29,7 @@
         app:layout_constraintVertical_bias="0.576" />
 
     <TextView
+        android:id="@+id/frase_usuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Jogador 01"
@@ -38,7 +40,7 @@
         app:layout_constraintVertical_bias="0.529" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imagem_usuario"
         android:layout_width="135dp"
         android:layout_height="112dp"
         android:layout_marginBottom="93dp"
@@ -112,6 +114,7 @@
             android:gravity="center_horizontal">
 
             <TextView
+                android:id="@+id/horario_domingo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -120,6 +123,7 @@
                 tools:layout_editor_absoluteY="322dp" />
 
             <TextView
+                android:id="@+id/horario_segunda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -128,6 +132,7 @@
                 tools:layout_editor_absoluteY="322dp" />
 
             <TextView
+                android:id="@+id/horario_terca"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -136,6 +141,7 @@
                 tools:layout_editor_absoluteY="322dp" />
 
             <TextView
+                android:id="@+id/horario_quarta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -179,6 +185,7 @@
             android:gravity="center_horizontal">
 
             <TextView
+                android:id="@+id/horario_quinta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -187,6 +194,7 @@
                 tools:layout_editor_absoluteY="322dp" />
 
             <TextView
+                android:id="@+id/horario_sexta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -195,6 +203,7 @@
                 tools:layout_editor_absoluteY="322dp" />
 
             <TextView
+                android:id="@+id/horario_sabado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"

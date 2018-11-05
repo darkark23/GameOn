@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import br.com.daniel.gameon.fragments.AmigosFragment;
 import br.com.daniel.gameon.fragments.GamesFragment;
 import br.com.daniel.gameon.fragments.PerfilFragment;
@@ -21,6 +23,8 @@ import br.com.daniel.gameon.fragments.SessoesFragment;
 
 public class MenuPrincipalActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +103,7 @@ public class MenuPrincipalActivity extends AppCompatActivity
         } else if (id == R.id.item_sair) {
             Intent intent = new Intent(MenuPrincipalActivity.this, LoginActivity.class);
             startActivity( intent );
+            firebaseAuth.signOut();
         } else if (id == R.id.item_configuracaoes) {
 
         } else if (id == R.id.item_avalie) {

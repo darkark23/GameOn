@@ -1,10 +1,5 @@
 package br.com.daniel.gameon.util;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 public final class dateUtil {
 
     public static String getHorario(String horario) {

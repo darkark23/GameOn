@@ -1,6 +1,8 @@
 package br.com.daniel.gameon.entity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -8,21 +10,24 @@ public class Horarios {
 
     private String idHorarios;
     private String idUsuario;
-    private Map<String,String> hoarios = new HashMap<>();
+    private List<String> hoariosInicio = new ArrayList<>();
+    private List<String> hoariosFim = new ArrayList<>();
     private String observacao;
 
     public Horarios() {
     }
 
-    public Horarios(String idHorarios, String idUsuario, Map<String,String> hoarios, String observacao) {
+    public Horarios(String idHorarios, String idUsuario,List<String> hoariosInicio,List<String> hoariosFim, String observacao) {
         this.idHorarios = idHorarios;
         this.idUsuario = idUsuario;
-        this.hoarios = hoarios;
+        this.hoariosFim = hoariosFim;
+        this.hoariosInicio = hoariosInicio;
         this.observacao = observacao;
     }
 
-    public Horarios(Map<String,String> hoarios, String observacao) {
-        this.hoarios = hoarios;
+    public Horarios(List<String> hoariosInicio,List<String> hoariosFim, String observacao) {
+        this.hoariosFim = hoariosFim;
+        this.hoariosInicio = hoariosInicio;
         this.observacao = observacao;
     }
 
@@ -42,12 +47,20 @@ public class Horarios {
         this.idUsuario = idUsuario;
     }
 
-    public Map<String,String> getHoarios() {
-        return hoarios;
+    public List<String> getHoariosInicio() {
+        return hoariosInicio;
     }
 
-    public void setHoarios(Map<String,String> hoarios) {
-        this.hoarios = hoarios;
+    public void setHoariosInicio(List<String> hoariosInicio) {
+        this.hoariosInicio = hoariosInicio;
+    }
+
+    public List<String> getHoariosFim() {
+        return hoariosFim;
+    }
+
+    public void setHoariosFim(List<String> hoariosFim) {
+        this.hoariosFim = hoariosFim;
     }
 
     public String getObservacao() {
@@ -63,12 +76,16 @@ public class Horarios {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Horarios horarios = (Horarios) o;
-        return Objects.equals(idHorarios, horarios.idHorarios);
+        return Objects.equals(idHorarios, horarios.idHorarios) &&
+                Objects.equals(idUsuario, horarios.idUsuario) &&
+                Objects.equals(hoariosInicio, horarios.hoariosInicio) &&
+                Objects.equals(hoariosFim, horarios.hoariosFim) &&
+                Objects.equals(observacao, horarios.observacao);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(idHorarios);
+        return Objects.hash(idHorarios, idUsuario, hoariosInicio, hoariosFim, observacao);
     }
 }
