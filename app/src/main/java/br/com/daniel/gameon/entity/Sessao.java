@@ -43,8 +43,6 @@ public class Sessao {
         this.publico = publico;
     }
 
-
-
     public String getIdSessao() {
         return idSessao;
     }
@@ -67,6 +65,14 @@ public class Sessao {
 
     public void setIdJogo(String idJogo) {
         this.idJogo = idJogo;
+    }
+
+    public String getNomeSessao() {
+        return nomeSessao;
+    }
+
+    public void setNomeSessao(String nomeSessao) {
+        this.nomeSessao = nomeSessao;
     }
 
     public String getDataInicio() {
@@ -109,25 +115,25 @@ public class Sessao {
         this.publico = publico;
     }
 
-    public String getNomeSessao() {
-        return nomeSessao;
-    }
-
-    public void setNomeSessao(String nomeSessao) {
-        this.nomeSessao = nomeSessao;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Sessao sessao = (Sessao) o;
-        return Objects.equals(idSessao, sessao.idSessao);
+        return Objects.equals(idSessao, sessao.idSessao) &&
+                Objects.equals(idUsuarioAdministrador, sessao.idUsuarioAdministrador) &&
+                Objects.equals(idJogo, sessao.idJogo) &&
+                Objects.equals(nomeSessao, sessao.nomeSessao) &&
+                Objects.equals(dataInicio, sessao.dataInicio) &&
+                Objects.equals(dataFim, sessao.dataFim) &&
+                Objects.equals(usuarios, sessao.usuarios) &&
+                Objects.equals(ativo, sessao.ativo) &&
+                Objects.equals(publico, sessao.publico);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(idSessao);
+        return Objects.hash(idSessao, idUsuarioAdministrador, idJogo, nomeSessao, dataInicio, dataFim, usuarios, ativo, publico);
     }
 }

@@ -23,27 +23,34 @@ public class JogoAdapter extends RecyclerView.Adapter<JogoAdapter.ViewHolder> {
     private Context context;
 
     public JogoAdapter(List<Jogo> listaJogo, Context context) {
+
         this.listaJogo = listaJogo;
         this.context = context;
+
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.games_recycler_view,parent,false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
+
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         Log.d(TAG,"onBindViewHolder: called");
         holder.nomeJogo.setText(listaJogo.get(position).getNome());
+
         holder.layoutJogo.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Toast.makeText(context,"ok",Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     @Override
@@ -60,11 +67,14 @@ public class JogoAdapter extends RecyclerView.Adapter<JogoAdapter.ViewHolder> {
         RelativeLayout layoutJogo;
 
         public ViewHolder(View itemView) {
+
             super(itemView);
             imageJogo = itemView.findViewById(R.id.imagem_jogo);
             nomeJogo = itemView.findViewById(R.id.nome_jogo);
             layoutJogo = itemView.findViewById(R.id.layout_jogo);
 
         }
+
     }
+
 }

@@ -1,17 +1,12 @@
 package br.com.daniel.gameon.util;
 
-public final class dateUtil {
+public final class DataUtil {
 
-    public static String getHorario(String horario) {
+    public static String formatHorario(String horario) {
         String horarioFormatado = horario.substring(0, 2) + ":" + horario.substring(2, 4) + ":" + horario.substring(4,6);
         return horario;
     }
-
-    public static String setHorario(String horas, String minutos, String segundos) {
-        return horas.toString() + minutos.toString() + segundos.toString();
-    }
-
-    public static String getData(String Data, Integer tipo){
+    public static String formatData(String Data, Integer tipo){
         String dataFormatada;
         if ( tipo == 1){
             dataFormatada = Data.substring(0,2) + "/" + Data.substring(2,4) + "/" + Data.substring(4,8);//(dd/mm/aaaa)
@@ -21,11 +16,7 @@ public final class dateUtil {
         return dataFormatada;
     }
 
-    public static String setData(String dia, String mes, String ano) {
-        return dia.toString() + mes.toString() + ano.toString();
-    }
-
-    public static String getDataHora(String DataHora, Integer tipo){
+    public static String formatDataHora(String DataHora, Integer tipo){
         String dataHoraFormatada;
         switch (tipo){
             case 1:
@@ -61,8 +52,21 @@ public final class dateUtil {
         return dataHoraFormatada;
     }
 
+    public static String formatHorarioPerfil(String horario) {
+        String horarioFormatado ="Apartir de \n" + horario.substring(0, 2) + ":" + horario.substring(2, 4);
+        return horarioFormatado;
+    }
+
     public static String setDataHora(String dia, String mes, String ano, String horas, String minutos, String segundos) {
         return dia.toString() + mes.toString() + ano.toString() + horas.toString() + minutos.toString() + segundos.toString();
+    }
+
+    public static String setHorario(String horas, String minutos, String segundos) {
+        return horas.toString() + minutos.toString() + segundos.toString();
+    }
+
+    public static String setData(String dia, String mes, String ano) {
+        return dia.toString() + mes.toString() + ano.toString();
     }
 
 }

@@ -36,6 +36,14 @@ public class Usuario {
         this.frase = frase;
     }
 
+    public Usuario(String idAutenticacao, String nomeUsuario, String nomeComlpeto, String frase, List<String> amigos) {
+        this.idAutenticacao = idAutenticacao;
+        this.nomeUsuario = nomeUsuario;
+        this.nomeComlpeto = nomeComlpeto;
+        this.frase = frase;
+        this.amigos = amigos;
+    }
+
     public String getIdAutenticacao() {
         return idAutenticacao;
     }
@@ -116,56 +124,26 @@ public class Usuario {
         this.sessoes = sessoes;
     }
 
-    public void setSessao(String sessao) {
-        this.sessoes.add(sessao);
-    }
-
-    public void setAmigo(String amigo) {
-        this.amigos.add(amigo);
-    }
-
-    public void setJogo(String jogo) {
-        this.jogos.add(jogo);
-    }
-
-    public void removerSessao(String sessao) {
-        for (int x = 0; x < this.sessoes.size(); x++){
-            if (this.sessoes.get(x).equals(sessao)){
-                this.sessoes.remove(x);
-                break;
-            }
-        }
-    }
-
-    public void removerAmigo(String amigo) {
-        for (int x = 0; x < this.amigos.size(); x++){
-            if (this.amigos.get(x).equals(amigo)){
-                this.amigos.remove(x);
-                break;
-            }
-        }
-    }
-
-    public void removerJogo(String jogo) {
-        for (int x = 0; x < this.jogos.size(); x++) {
-            if (this.jogos.get(x).equals(jogo)) {
-                this.jogos.remove(x);
-                break;
-            }
-        }
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
         return Objects.equals(idAutenticacao, usuario.idAutenticacao) &&
-                Objects.equals(idUsuario, usuario.idUsuario);
+                Objects.equals(idImagem, usuario.idImagem) &&
+                Objects.equals(idUsuario, usuario.idUsuario) &&
+                Objects.equals(idHorarios, usuario.idHorarios) &&
+                Objects.equals(nomeUsuario, usuario.nomeUsuario) &&
+                Objects.equals(nomeComlpeto, usuario.nomeComlpeto) &&
+                Objects.equals(frase, usuario.frase) &&
+                Objects.equals(amigos, usuario.amigos) &&
+                Objects.equals(jogos, usuario.jogos) &&
+                Objects.equals(sessoes, usuario.sessoes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idAutenticacao, idUsuario);
+
+        return Objects.hash(idAutenticacao, idImagem, idUsuario, idHorarios, nomeUsuario, nomeComlpeto, frase, amigos, jogos, sessoes);
     }
 }

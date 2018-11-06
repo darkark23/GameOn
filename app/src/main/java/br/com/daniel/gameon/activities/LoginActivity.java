@@ -21,61 +21,78 @@ import br.com.daniel.gameon.util.CargaInicialUtil;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private FirebaseAuth firebaseAuth;
-    private DatabaseReference dtRef = FirebaseDatabase.getInstance().getReference();
-    private FirebaseAuth.AuthStateListener authStateListener;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-    private EditText usuarioEmail;
-    private EditText usuarioSenha;
+    private FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        firebaseAuth = FirebaseAuth.getInstance();
+
         authStateListener = new FirebaseAuth.AuthStateListener() {
+
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
                 if (firebaseAuth.getCurrentUser() != null){
                     startActivity( new Intent(LoginActivity.this, MenuPrincipalActivity.class));
+                } else {
+                    setContentView(R.layout.activity_login);
                 }
+
             }
         };
+
+
+
     }
 
     @Override
     protected void onStart() {
+
         super.onStart();
-        //firebaseAuth.signOut();
+
         firebaseAuth.addAuthStateListener(authStateListener);
+
     }
 
     public void openRegisterUser(View view){
+
         Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
         startActivity( intent );
+
     }
 
     public void openMenuPrincipal(View view){
-        usuarioEmail = findViewById(R.id.usuario_email);
-        usuarioSenha = findViewById(R.id.usuario_senha);
+
+        EditText usuarioEmail = findViewById(R.id.usuario_email);
+        EditText usuarioSenha = findViewById(R.id.usuario_senha);
+
         String email = usuarioEmail.getText().toString();
         String senha = usuarioSenha.getText().toString();
 
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(senha)){
             Toast.makeText(LoginActivity.this, "Informe a senha e o email!", Toast.LENGTH_LONG).show();
         } else {
+
             firebaseAuth.signInWithEmailAndPassword(email,senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+
                     if (!task.isSuccessful()){
                         Toast.makeText(LoginActivity.this, "Erro desconhecido tente novamente!", Toast.LENGTH_LONG).show();
                     }
+
                 }
+
             });
         }
     }
 
     public void cargaInicial(View view){
-        CargaInicialUtil.cargaInicial(dtRef);
+        CargaInicialUtil.cargaInicial();
     }
+
 }

@@ -23,28 +23,35 @@ public class AmigoAdapter extends RecyclerView.Adapter<AmigoAdapter.ViewHolder> 
     private Context context;
 
     public AmigoAdapter(List<Usuario> listaAmigos, Context context) {
+
         this.listaAmigos = listaAmigos;
         this.context = context;
+
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.amigo_recycler_view,parent,false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
+
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         Log.d(TAG,"onBindViewHolder: called");
         holder.nomeAmigo.setText(listaAmigos.get(position).getNomeUsuario());
         holder.fraseAmigo.setText(listaAmigos.get(position).getFrase());
+
         holder.layoutAmigo.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Toast.makeText(context,"ok",Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     @Override
@@ -62,6 +69,7 @@ public class AmigoAdapter extends RecyclerView.Adapter<AmigoAdapter.ViewHolder> 
         RelativeLayout layoutAmigo;
 
         public ViewHolder(View itemView) {
+
             super(itemView);
             imageAmigo = itemView.findViewById(R.id.imagem_amigo);
             nomeAmigo = itemView.findViewById(R.id.nome_amigo);
@@ -69,5 +77,7 @@ public class AmigoAdapter extends RecyclerView.Adapter<AmigoAdapter.ViewHolder> 
             layoutAmigo = itemView.findViewById(R.id.layout_amigo);
 
         }
+
     }
+
 }
