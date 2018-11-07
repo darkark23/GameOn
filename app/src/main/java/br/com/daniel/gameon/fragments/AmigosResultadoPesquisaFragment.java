@@ -11,7 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,10 +26,11 @@ import java.util.List;
 import br.com.daniel.gameon.R;
 import br.com.daniel.gameon.activities.MenuPrincipalActivity;
 import br.com.daniel.gameon.adapter.AmigoAdapter;
-import br.com.daniel.gameon.entity.Jogo;
 import br.com.daniel.gameon.entity.Usuario;
 
-public class AmigosFragment extends Fragment {
+public class AmigosResultadoPesquisaFragment extends Fragment {
+
+    private  String nomePesquisa;
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -42,11 +43,9 @@ public class AmigosFragment extends Fragment {
 
         verificaAutenticacao();
 
-        view = inflater.inflate(R.layout.amigos_fragment, container, false);
-
-
-
-        carregarBotaoAdicionar();
+        view = inflater.inflate(R.layout.amigos_resultado_pesquisa_fragment, container, false);
+        nomePesquisa = getArguments().getString("nomePesquisa");
+        adicionarBotaoVoltar();
         carregarUsuario();
 
         return view;
@@ -65,7 +64,9 @@ public class AmigosFragment extends Fragment {
 
                         Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                         Usuario usuario = children.iterator().next().getValue(Usuario.class);
-                        getAmigos(usuario.getAmigos());
+                        List<String> listaAmigos = usuario.getAmigos();
+                        listaAmigos.add(usuario.getIdUsuario());
+                        getAmigos(listaAmigos);
 
                     }
 
@@ -81,7 +82,7 @@ public class AmigosFragment extends Fragment {
     public void getAmigos(final List<String> listaIdAmigos){
 
 
-        databaseReference.child("usuarios").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("usuarios").orderByChild("nomeUsuario").startAt(nomePesquisa).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -90,18 +91,20 @@ public class AmigosFragment extends Fragment {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
                 for (DataSnapshot child: children) {
-
+                    boolean repetido = false;
                     Usuario usuario = child.getValue(Usuario.class);
 
                     for (String id:listaIdAmigos){
-
                         if (id != null){
                             if (id.equals(usuario.getIdUsuario())){
-                                listaAmigos.add(usuario);
+                                repetido = true;
                                 break;
                             }
                         }
+                    }
 
+                    if (!repetido){
+                        listaAmigos.add(usuario);
                     }
 
                 }
@@ -118,15 +121,29 @@ public class AmigosFragment extends Fragment {
         });
     }
 
-
-
-
     public void initRecyclerView(List<Usuario> listaAmigos){
 
-        RecyclerView recyclerView = view.findViewById(R.id.amigo_recycler_view);
-        RecyclerView.Adapter adapter = new AmigoAdapter(listaAmigos,view.getContext(),getFragmentManager(),1);
+        RecyclerView recyclerView = view.findViewById(R.id.amigo_resutado_pesquisa_recycler_view);
+        RecyclerView.Adapter adapter = new AmigoAdapter(listaAmigos,view.getContext(),getFragmentManager(),2);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+    }
+
+    public void adicionarBotaoVoltar(){
+
+        Button botaoVoltar = view.findViewById(R.id.botao_voltar);
+        botaoVoltar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                getFragmentManager().beginTransaction().
+                        replace(R.id.content_frame, new AmigoProcuraFragment()).commit();
+
+            }
+
+        });
 
     }
 
@@ -144,23 +161,6 @@ public class AmigosFragment extends Fragment {
             }
 
         };
-
-    }
-
-    public void carregarBotaoAdicionar(){
-
-        FloatingActionButton btn =(FloatingActionButton) view.findViewById(R.id.adicionarAmigosButton);
-
-        btn.setOnClickListener( new View.OnClickListener(){
-
-            public void onClick(View view) {
-
-                getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, new AmigoProcuraFragment()).commit();
-
-            }
-
-        });
 
     }
 

@@ -1,6 +1,8 @@
 package br.com.daniel.gameon.adapter;
 
+import android.app.FragmentManager;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,23 +11,27 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.daniel.gameon.R;
 import br.com.daniel.gameon.entity.Usuario;
+import br.com.daniel.gameon.fragments.EditarAmigoFragment;
 
 public class AmigoAdapter extends RecyclerView.Adapter<AmigoAdapter.ViewHolder> {
 
+    private Integer tipo;
     private List<Usuario> listaAmigos = new ArrayList<Usuario>();
     private Context context;
+    private FragmentManager fragmentManager;
 
-    public AmigoAdapter(List<Usuario> listaAmigos, Context context) {
+    public AmigoAdapter(List<Usuario> listaAmigos, Context context, FragmentManager fragmentManager, Integer tipo) {
 
+        this.tipo = tipo;
         this.listaAmigos = listaAmigos;
         this.context = context;
+        this.fragmentManager = fragmentManager;
 
     }
 
@@ -39,17 +45,34 @@ public class AmigoAdapter extends RecyclerView.Adapter<AmigoAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         Log.d(TAG,"onBindViewHolder: called");
         holder.nomeAmigo.setText(listaAmigos.get(position).getNomeUsuario());
         holder.fraseAmigo.setText(listaAmigos.get(position).getFrase());
-
         holder.layoutAmigo.setOnClickListener(new View.OnClickListener(){
+
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"ok",Toast.LENGTH_SHORT).show();
+
+                EditarAmigoFragment editarAmigoFragment = new EditarAmigoFragment();
+                Bundle args = new Bundle();
+                args.putString("idAmigo",listaAmigos.get(position).getIdUsuario());
+                if (tipo == 1){
+                    args.putInt("tipo",1);
+                    editarAmigoFragment.setArguments(args);
+                    fragmentManager.beginTransaction().
+                            replace(R.id.content_frame, editarAmigoFragment).commit();
+                } else {
+                    args.putInt("tipo",2);
+                    editarAmigoFragment.setArguments(args);
+                    fragmentManager.beginTransaction().
+                            replace(R.id.content_frame, editarAmigoFragment).addToBackStack(null).commit();
+                }
+
+
             }
+
         });
 
     }
