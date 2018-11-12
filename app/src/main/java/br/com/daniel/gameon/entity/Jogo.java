@@ -22,6 +22,11 @@ public class Jogo {
         this.jogadores = jogadores;
     }
 
+    public Jogo(String nome, String descricao) {
+        this.nome = nome;
+        this.descricao = descricao;
+    }
+
     public String getIdJogo() {
         return idJogo;
     }
@@ -67,12 +72,16 @@ public class Jogo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Jogo jogo = (Jogo) o;
-        return Objects.equals(idJogo, jogo.idJogo);
+        return Objects.equals(idJogo, jogo.idJogo) &&
+                Objects.equals(idImagem, jogo.idImagem) &&
+                Objects.equals(nome, jogo.nome) &&
+                Objects.equals(descricao, jogo.descricao) &&
+                Objects.equals(jogadores, jogo.jogadores);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(idJogo);
+        return Objects.hash(idJogo, idImagem, nome, descricao, jogadores);
     }
 }

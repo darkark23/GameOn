@@ -1,7 +1,9 @@
 package br.com.daniel.gameon.entity;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,10 +12,9 @@ public class Sessao {
     private String idSessao;
     private String idUsuarioAdministrador;
     private String idJogo;
-    private LocalDate dataInicio;
-    private LocalDateTime horarioInicio;
-    private LocalDate dataFim;
-    private LocalDateTime horarioFim;
+    private String nomeSessao;
+    private String dataInicio;
+    private String dataFim;
     private List<String> usuarios;
     private String ativo;
     private Boolean publico;
@@ -21,16 +22,24 @@ public class Sessao {
     public Sessao() {
     }
 
-    public Sessao(String idSessao, String idUsuarioAdministrador, String idJogo, LocalDate dataInicio, LocalDateTime horarioInicio, LocalDate dataFim, LocalDateTime horarioFim, List<String> usuarios, String ativo, Boolean publico) {
+    public Sessao(String idSessao, String idUsuarioAdministrador, String idJogo, String nomeSessao, String dataInicio, String dataFim, List<String> usuarios, String ativo, Boolean publico) {
         this.idSessao = idSessao;
         this.idUsuarioAdministrador = idUsuarioAdministrador;
         this.idJogo = idJogo;
+        this.nomeSessao = nomeSessao;
         this.dataInicio = dataInicio;
-        this.horarioInicio = horarioInicio;
         this.dataFim = dataFim;
-        this.horarioFim = horarioFim;
         this.usuarios = usuarios;
         this.ativo = ativo;
+        this.publico = publico;
+    }
+
+    public Sessao(String nomeSessao,String idJogo, String dataInicio, String dataFim, Boolean publico) {
+        this.nomeSessao = nomeSessao;
+        this.idJogo = idJogo;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        this.ativo = "S";
         this.publico = publico;
     }
 
@@ -58,36 +67,28 @@ public class Sessao {
         this.idJogo = idJogo;
     }
 
-    public LocalDate getDataInicio() {
+    public String getNomeSessao() {
+        return nomeSessao;
+    }
+
+    public void setNomeSessao(String nomeSessao) {
+        this.nomeSessao = nomeSessao;
+    }
+
+    public String getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(LocalDate dataInicio) {
+    public void setDataInicio(String dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public LocalDateTime getHorarioInicio() {
-        return horarioInicio;
-    }
-
-    public void setHorarioInicio(LocalDateTime horarioInicio) {
-        this.horarioInicio = horarioInicio;
-    }
-
-    public LocalDate getDataFim() {
+    public String getDataFim() {
         return dataFim;
     }
 
-    public void setDataFim(LocalDate dataFim) {
+    public void setDataFim(String dataFim) {
         this.dataFim = dataFim;
-    }
-
-    public LocalDateTime getHorarioFim() {
-        return horarioFim;
-    }
-
-    public void setHorarioFim(LocalDateTime horarioFim) {
-        this.horarioFim = horarioFim;
     }
 
     public List<String> getUsuarios() {
@@ -119,12 +120,20 @@ public class Sessao {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Sessao sessao = (Sessao) o;
-        return Objects.equals(idSessao, sessao.idSessao);
+        return Objects.equals(idSessao, sessao.idSessao) &&
+                Objects.equals(idUsuarioAdministrador, sessao.idUsuarioAdministrador) &&
+                Objects.equals(idJogo, sessao.idJogo) &&
+                Objects.equals(nomeSessao, sessao.nomeSessao) &&
+                Objects.equals(dataInicio, sessao.dataInicio) &&
+                Objects.equals(dataFim, sessao.dataFim) &&
+                Objects.equals(usuarios, sessao.usuarios) &&
+                Objects.equals(ativo, sessao.ativo) &&
+                Objects.equals(publico, sessao.publico);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(idSessao);
+        return Objects.hash(idSessao, idUsuarioAdministrador, idJogo, nomeSessao, dataInicio, dataFim, usuarios, ativo, publico);
     }
 }

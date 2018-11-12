@@ -18,29 +18,30 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import br.com.daniel.gameon.R;
-import br.com.daniel.gameon.activities.LoginActivity;
 import br.com.daniel.gameon.activities.MenuPrincipalActivity;
 import br.com.daniel.gameon.entity.Horarios;
 import br.com.daniel.gameon.entity.Usuario;
 import br.com.daniel.gameon.util.DataUtil;
+import br.com.daniel.gameon.util.HorariosUtil;
 
-public class PerfilFragment extends Fragment {
+public class EditarJogoFragment extends Fragment {
+
+    private String amigoId;
 
     private View view;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseAuth.AuthStateListener authStateListener;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         verificaAutenticacao();
-
-        view = inflater.inflate(R.layout.perfil_fragment,container,false);
-
+        view = inflater.inflate(R.layout.amigo_editar_fragment,container,false);
+        amigoId = getArguments().getString("idAmigo");
         carregarPerfil();
-
         return view;
 
     }
@@ -52,7 +53,7 @@ public class PerfilFragment extends Fragment {
         final TextView fraseUsuario = view.findViewById(R.id.frase_usuario);
         final TextView nomeUsuario = view.findViewById(R.id.nome_usuario);
 
-        databaseReference.child("usuarios").orderByChild("idAutenticacao").startAt(idUsuario).endAt(idUsuario)
+        databaseReference.child("usuarios").orderByChild("idUsuario").equalTo(amigoId)
                 .addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -95,8 +96,14 @@ public class PerfilFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                        Horarios horarios;
                         Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                        Horarios horarios = children.iterator().next().getValue(Horarios.class);
+
+                        if (children.iterator().hasNext()){
+                            horarios = children.iterator().next().getValue(Horarios.class);
+                        } else {
+                            horarios = HorariosUtil.horariosNaoPreenchidos();
+                        }
 
                         horarioDomingo.setText(DataUtil.formatHorarioPerfil(horarios.getHoariosInicio().get(0)));
                         horarioSegunda.setText(DataUtil.formatHorarioPerfil(horarios.getHoariosInicio().get(1)));
@@ -110,14 +117,6 @@ public class PerfilFragment extends Fragment {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        horarioDomingo.setText(DataUtil.formatHorarioPerfil(databaseError.getMessage()));
-                        horarioSegunda.setText(DataUtil.formatHorarioPerfil(databaseError.getMessage()));
-                        horarioTerca.setText(DataUtil.formatHorarioPerfil(databaseError.getMessage()));
-                        horarioQuarta.setText(DataUtil.formatHorarioPerfil(databaseError.getMessage()));
-                        horarioQuinta.setText(DataUtil.formatHorarioPerfil(databaseError.getMessage()));
-                        horarioSexta.setText(DataUtil.formatHorarioPerfil(databaseError.getMessage()));
-                        horarioSabado.setText(DataUtil.formatHorarioPerfil(databaseError.getMessage()));
 
                     }
                 });
