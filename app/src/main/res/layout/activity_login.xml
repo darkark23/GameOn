@@ -23,10 +23,10 @@
         app:srcCompat="@drawable/logo" />
 
     <EditText
-        android:id="@+id/usuario_email"
+        android:id="@+id/idUserLogin"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="11dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/fundo_input_login"
@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
     <EditText
-        android:id="@+id/usuario_senha"
+        android:id="@+id/idPasswordLogin"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -58,7 +58,7 @@
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usuario_email"
+        app:layout_constraintTop_toBottomOf="@+id/idUserLogin"
         app:layout_constraintVertical_bias="0.264" />
 
     <Button
@@ -69,39 +69,15 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="140dp"
         android:background="@drawable/fundo_botao_login"
+        android:onClick="signIn"
         android:text="entrar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="56dp"
-        android:background="@drawable/fundo_botao_login"
-        android:onClick="openMenuPrincipal"
-        android:text="Teste Entrar "
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/fundo_botao_login"
-        android:onClick="cargaInicial"
-        android:text="Carga Inicial"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -116,4 +92,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button"
         app:layout_constraintVertical_bias="0.123" />
+
+    <ImageView
+        android:id="@+id/login_button_facebook"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/login_button_google"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.038"
+        app:srcCompat="@drawable/com_facebook_favicon_blue"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/login_button_google"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.025"
+        app:srcCompat="@drawable/googleg_standard_color_18"
+        tools:ignore="MissingConstraints" />
 </android.support.constraint.ConstraintLayout>

@@ -24,8 +24,6 @@ import br.com.daniel.gameon.fragments.SessoesFragment;
 public class MenuPrincipalActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -52,29 +50,23 @@ public class MenuPrincipalActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_principal, menu);
         return true;
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -86,17 +78,14 @@ public class MenuPrincipalActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         FragmentManager fragmentManager = getFragmentManager();
-
         if (id == R.id.item_amigo) {
             fragmentManager.beginTransaction().
                     replace(R.id.content_frame,new AmigosFragment()).commit();
@@ -110,9 +99,7 @@ public class MenuPrincipalActivity extends AppCompatActivity
             fragmentManager.beginTransaction().
                     replace(R.id.content_frame,new PerfilFragment()).commit();
         } else if (id == R.id.item_sair) {
-            Intent intent = new Intent(MenuPrincipalActivity.this, LoginActivity.class);
-            startActivity( intent );
-            firebaseAuth.signOut();
+            onSignOut();
         } else if (id == R.id.item_configuracaoes) {
 
         } else if (id == R.id.item_avalie) {
@@ -122,7 +109,13 @@ public class MenuPrincipalActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
 
+    public void onSignOut(){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.signOut();
+        Intent intent = new Intent(MenuPrincipalActivity.this, LoginActivity.class);
+        startActivity( intent );
     }
 
 }

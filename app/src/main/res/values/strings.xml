@@ -7,4 +7,8 @@
     <!--Exemplos-->
     <string name="menu_exemplo_usuario">Jogador 01</string>
     <string name="menu_exemplo_frase">Procurando Jogadores</string>
+    <string name="title_activity_tesda_main">tesdaMainActivity</string>
+    <string name="facebook_app_id">525665224568712</string>
+    <string name="fb_login_protocol_scheme">fb525665224568712</string>
+
 </resources>
