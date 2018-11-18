@@ -13,7 +13,7 @@
         android:id="@+id/userNameRegister"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/fundo_input_login"
         android:ems="10"
         android:hint="Digite seu usuário"
@@ -28,7 +28,7 @@
         android:id="@+id/userEmailRegister"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="25dp"
         android:background="@drawable/fundo_input_login"
         android:ems="10"
         android:hint="Digite seu email"
@@ -43,7 +43,7 @@
         android:id="@+id/userPasswordRegister"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="25dp"
         android:background="@drawable/fundo_input_login"
         android:ems="10"
         android:hint="Digite sua senha"
@@ -54,12 +54,27 @@
         app:layout_constraintTop_toBottomOf="@+id/userEmailRegister"
         tools:layout_editor_absoluteX="16dp" />
 
+    <EditText
+        android:id="@+id/userConfirmPasswordRegister"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/fundo_input_login"
+        android:ems="10"
+        android:hint="Confirme sua senha"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@+id/userPasswordRegister"
+        tools:layout_editor_absoluteX="16dp" />
+
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="153dp"
         android:layout_height="79dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,11 +85,11 @@
         android:id="@+id/button2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/fundo_botao_login"
         android:onClick="registerUser"
-        android:text="cadastrar"
-        app:layout_constraintTop_toBottomOf="@+id/userPasswordRegister"
+        android:text="avançar"
+        app:layout_constraintTop_toBottomOf="@+id/userConfirmPasswordRegister"
         tools:layout_editor_absoluteX="16dp" />
 
     <TextView

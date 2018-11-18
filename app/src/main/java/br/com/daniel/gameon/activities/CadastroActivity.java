@@ -24,7 +24,13 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     public void backToLogin(View view){
-        Intent intent = new Intent(CadastroActivity.this, LoginActivity.class);
+        personalInformation(view);
+//        Intent intent = new Intent(CadastroActivity.this, LoginActivity.class);
+//        startActivity( intent );
+    }
+
+    public void personalInformation(View view){
+        Intent intent = new Intent(CadastroActivity.this, InformacoesPessoaisActivity.class);
         startActivity( intent );
     }
 
@@ -41,7 +47,7 @@ public class CadastroActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            backToLogin(view);
+                            personalInformation(view);
                         }
                     }
                 });
