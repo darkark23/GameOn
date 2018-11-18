@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -104,6 +105,11 @@ public class GamesFragment extends Fragment {
 
                 }
 
+                if (listaJogos.isEmpty()){
+                    TextView nenhum = view.findViewById(R.id.nenhum_text_view);
+                    nenhum.setText("Você não tem nenhum Game na usa lista!");
+                }
+
                 initRecyclerView(listaJogos);
 
             }
@@ -119,7 +125,7 @@ public class GamesFragment extends Fragment {
     public void initRecyclerView(List<Jogo> listaAmigos){
 
         RecyclerView recyclerView = view.findViewById(R.id.game_recycler_view);
-        RecyclerView.Adapter adapter = new JogoAdapter(listaAmigos,view.getContext());
+        RecyclerView.Adapter adapter = new JogoAdapter(listaAmigos,view.getContext(),getFragmentManager(),1);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
@@ -143,7 +149,18 @@ public class GamesFragment extends Fragment {
     }
 
     public void carregarBotaoAdicionar(){
-        
+        FloatingActionButton btn =(FloatingActionButton) view.findViewById(R.id.game_botao_adicionar);
+
+        btn.setOnClickListener( new View.OnClickListener(){
+
+            public void onClick(View view) {
+
+                getFragmentManager().beginTransaction().
+                        replace(R.id.content_frame, new GamesProcuraFragment()).commit();
+
+            }
+
+        });
     }
 
 }

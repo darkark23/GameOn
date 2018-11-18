@@ -8,6 +8,7 @@
     tools:context=".activities.MenuPrincipalActivity">
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/game_botao_adicionar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -29,5 +30,17 @@
         android:layout_height="match_parent"
         android:id="@+id/game_recycler_view">
     </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/nenhum_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/game_recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/game_recycler_view" />
 
 </android.support.constraint.ConstraintLayout>

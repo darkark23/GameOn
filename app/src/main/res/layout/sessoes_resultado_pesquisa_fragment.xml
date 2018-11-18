@@ -23,13 +23,10 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/amigo_resutado_pesquisa_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/botao_voltar"
-        app:layout_constraintTop_toTopOf="parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:id="@+id/sessoes_resutado_pesquisa_recycler_view">
+    </android.support.v7.widget.RecyclerView>
 
     <TextView
         android:id="@+id/nenhum_text_view"
@@ -38,9 +35,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/amigo_resutado_pesquisa_recycler_view"
+        app:layout_constraintBottom_toBottomOf="@+id/sessoes_resutado_pesquisa_recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/amigo_resutado_pesquisa_recycler_view" />
+        app:layout_constraintTop_toTopOf="@+id/sessoes_resutado_pesquisa_recycler_view" />
 
 </android.support.constraint.ConstraintLayout>

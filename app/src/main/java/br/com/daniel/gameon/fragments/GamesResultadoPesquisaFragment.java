@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,9 +26,11 @@ import java.util.List;
 import br.com.daniel.gameon.R;
 import br.com.daniel.gameon.activities.MenuPrincipalActivity;
 import br.com.daniel.gameon.adapter.AmigoAdapter;
+import br.com.daniel.gameon.adapter.JogoAdapter;
+import br.com.daniel.gameon.entity.Jogo;
 import br.com.daniel.gameon.entity.Usuario;
 
-public class AmigosResultadoPesquisaFragment extends Fragment {
+public class GamesResultadoPesquisaFragment extends Fragment {
 
     private  String nomePesquisa;
 
@@ -44,7 +45,7 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
 
         verificaAutenticacao();
 
-        view = inflater.inflate(R.layout.amigos_resultado_pesquisa_fragment, container, false);
+        view = inflater.inflate(R.layout.games_resultado_pesquisa_fragment, container, false);
         nomePesquisa = getArguments().getString("nomePesquisa");
         adicionarBotaoVoltar();
         carregarUsuario();
@@ -65,9 +66,7 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
 
                         Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                         Usuario usuario = children.iterator().next().getValue(Usuario.class);
-                        List<String> listaAmigos = usuario.getAmigos();
-                        listaAmigos.add(usuario.getIdUsuario());
-                        getAmigos(listaAmigos);
+                        getAmigos(usuario.getJogos());
 
                     }
 
@@ -80,24 +79,24 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
 
     }
 
-    public void getAmigos(final List<String> listaIdAmigos){
+    public void getAmigos(final List<String> listaJogosRegistrados){
 
 
-        databaseReference.child("usuarios").orderByChild("nomeUsuario").startAt(nomePesquisa).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("jogos").orderByChild("nome").startAt(nomePesquisa).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                final List<Usuario> listaAmigos = new ArrayList<Usuario>();
+                final List<Jogo> listaJogos = new ArrayList<Jogo>();
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
                 for (DataSnapshot child: children) {
                     boolean repetido = false;
-                    Usuario usuario = child.getValue(Usuario.class);
+                    Jogo jogo = child.getValue(Jogo.class);
 
-                    for (String id:listaIdAmigos){
+                    for (String id:listaJogosRegistrados){
                         if (id != null){
-                            if (id.equals(usuario.getIdUsuario())){
+                            if (id.equals(jogo.getIdJogo())){
                                 repetido = true;
                                 break;
                             }
@@ -105,17 +104,17 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
                     }
 
                     if (!repetido){
-                        listaAmigos.add(usuario);
+                        listaJogos.add(jogo);
                     }
 
                 }
 
-                if (listaAmigos.isEmpty()){
+                if (listaJogos.isEmpty()){
                     TextView nenhum = view.findViewById(R.id.nenhum_text_view);
-                    nenhum.setText("Não existe nenhum jogoador que atenda o filtro infotmado!");
+                    nenhum.setText("Não existe nenhum game que atenda o filtro infotmado!");
                 }
 
-                initRecyclerView(listaAmigos);
+                initRecyclerView(listaJogos);
 
             }
 
@@ -127,10 +126,10 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
         });
     }
 
-    public void initRecyclerView(List<Usuario> listaAmigos){
+    public void initRecyclerView(List<Jogo> listaJogos){
 
-        RecyclerView recyclerView = view.findViewById(R.id.amigo_resutado_pesquisa_recycler_view);
-        RecyclerView.Adapter adapter = new AmigoAdapter(listaAmigos,view.getContext(),getFragmentManager(),2);
+        RecyclerView recyclerView = view.findViewById(R.id.game_resutado_pesquisa_recycler_view);
+        RecyclerView.Adapter adapter = new JogoAdapter(listaJogos,view.getContext(),getFragmentManager(),2);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
@@ -145,7 +144,7 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
             public void onClick(View view) {
 
                 getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, new AmigoProcuraFragment()).commit();
+                        replace(R.id.content_frame, new GamesProcuraFragment()).commit();
 
             }
 

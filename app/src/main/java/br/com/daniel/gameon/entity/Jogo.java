@@ -1,5 +1,6 @@
 package br.com.daniel.gameon.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,7 +10,7 @@ public class Jogo {
     private String idImagem;
     private String nome;
     private String descricao;
-    private List<String> jogadores;
+    private List<String> jogadores = new ArrayList<>();
 
     public Jogo() {
     }

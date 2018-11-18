@@ -106,6 +106,11 @@ public class AmigosFragment extends Fragment {
 
                 }
 
+                if (listaAmigos.isEmpty()){
+                    TextView nenhum = view.findViewById(R.id.nenhum_text_view);
+                    nenhum.setText("Você não tem nenhum amigo registrado!");
+                }
+
                 initRecyclerView(listaAmigos);
 
             }

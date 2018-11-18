@@ -23,37 +23,36 @@ import java.util.List;
 
 import br.com.daniel.gameon.R;
 import br.com.daniel.gameon.activities.MenuPrincipalActivity;
-import br.com.daniel.gameon.entity.Horarios;
+import br.com.daniel.gameon.entity.Jogo;
+import br.com.daniel.gameon.entity.Sessao;
 import br.com.daniel.gameon.entity.Usuario;
 import br.com.daniel.gameon.util.DataUtil;
-import br.com.daniel.gameon.util.HorariosUtil;
+import br.com.daniel.gameon.util.FormatUtil;
 
-public class EditarAmigoFragment extends Fragment {
+public class EditarSessoesFragment extends Fragment {
 
-    private View view;
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private FirebaseAuth.AuthStateListener authStateListener;
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    View view;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseAuth.AuthStateListener authStateListener;
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-    private String amigoId;
+    private String idSessao;
     private String idUsuarioAtual;
     private Integer tipoProcedimento;
 
     private Usuario usuarioAtual;
-    private Usuario usuarioAmigo;
-    private Horarios horariosUsuarioAmigo;
+    private Sessao sessao;
 
-    private TextView fraseUsuario;
-    private TextView nomeUsuario;
-    private TextView horarioDomingo;
-    private TextView horarioSegunda;
-    private TextView horarioTerca;
-    private TextView horarioQuarta;
-    private TextView horarioQuinta;
-    private TextView horarioSexta;
-    private TextView horarioSabado;
+    private TextView nomeSessao;
+    private TextView jogoSessao;
+    private TextView inicioSessao;
+    private TextView fimSessao;
+    private TextView publicoSessao;
+    private TextView ativoSessao;
+
     private Button botaoVoltar;
     private Button botaoAdicionarRemover;
+    private Button botaoJogadores;
 
     @Nullable
     @Override
@@ -63,27 +62,49 @@ public class EditarAmigoFragment extends Fragment {
         carregarParametros();
         carregarInterface(inflater,container);
         carregarUsuarioAtual();
-        carregarUsuarioAmigo();
-
+        carregarSessao();
         return view;
 
     }
 
-    public void carregarUsuarioAmigo(){
+    public void carregarSessao(){
 
-        databaseReference.child("usuarios").orderByChild("idUsuario").equalTo(amigoId)
+        databaseReference.child("sessoes").orderByChild("idSessao").equalTo(idSessao)
                 .addValueEventListener(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                         Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                        usuarioAmigo = children.iterator().next().getValue(Usuario.class);
+                        sessao = children.iterator().next().getValue(Sessao.class);
+                        nomeSessao.setText(sessao.getNomeSessao());
+                        inicioSessao.setText(DataUtil.formatDataHora(sessao.getDataInicio(),6));
+                        fimSessao.setText(DataUtil.formatDataHora(sessao.getDataFim(),6));
+                        publicoSessao.setText(FormatUtil.publicoFormat(sessao.getPublico()));
+                        ativoSessao.setText(FormatUtil.finalizadoFormat(sessao.getAtivo()));
+                        carregarJogoSessao();
+                    }
 
-                        nomeUsuario.setText(usuarioAmigo.getNomeUsuario());
-                        fraseUsuario.setText(usuarioAmigo.getFrase());
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        carregarHorariosUsuarioAmigo();
+                    }
+
+                });
+
+    }
+
+    public void carregarJogoSessao(){
+
+        databaseReference.child("jogos").orderByChild("idJogo").equalTo(sessao.getIdJogo())
+                .addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                        Jogo jogo = children.iterator().next().getValue(Jogo.class);
+                        jogoSessao.setText(jogo.getNome());
 
                     }
 
@@ -96,59 +117,20 @@ public class EditarAmigoFragment extends Fragment {
 
     }
 
-    public void carregarHorariosUsuarioAmigo(){
-
-        databaseReference.child("horarios").orderByChild("idUsuario").startAt(usuarioAmigo.getIdUsuario()).endAt(usuarioAmigo.getIdHorarios()).addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-
-                if (children.iterator().hasNext()){
-
-                    horariosUsuarioAmigo = children.iterator().next().getValue(Horarios.class);
-
-                    horarioDomingo.setText(DataUtil.formatHorarioPerfil(horariosUsuarioAmigo.getHoariosInicio().get(0)));
-                    horarioSegunda.setText(DataUtil.formatHorarioPerfil(horariosUsuarioAmigo.getHoariosInicio().get(1)));
-                    horarioTerca.setText(DataUtil.formatHorarioPerfil(horariosUsuarioAmigo.getHoariosInicio().get(2)));
-                    horarioQuarta.setText(DataUtil.formatHorarioPerfil(horariosUsuarioAmigo.getHoariosInicio().get(3)));
-                    horarioQuinta.setText(DataUtil.formatHorarioPerfil(horariosUsuarioAmigo.getHoariosInicio().get(4)));
-                    horarioSexta.setText(DataUtil.formatHorarioPerfil(horariosUsuarioAmigo.getHoariosInicio().get(5)));
-                    horarioSabado.setText(DataUtil.formatHorarioPerfil(horariosUsuarioAmigo.getHoariosInicio().get(6)));
-
-                } else {
-
-                    horariosUsuarioAmigo = HorariosUtil.horariosNaoPreenchidos();
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-
-        });
-
-    }
 
     public void carregarInterface(LayoutInflater inflater,ViewGroup container){
 
-        view = inflater.inflate(R.layout.amigo_editar_fragment,container,false);
+        view = inflater.inflate(R.layout.sessoes_editar_fragment,container,false);
 
-        fraseUsuario = view.findViewById(R.id.frase_usuario);
-        nomeUsuario = view.findViewById(R.id.nome_usuario);
-        horarioDomingo = view.findViewById(R.id.horario_domingo);
-        horarioSegunda = view.findViewById(R.id.horario_segunda);
-        horarioTerca = view.findViewById(R.id.horario_terca);
-        horarioQuarta = view.findViewById(R.id.horario_quarta);
-        horarioQuinta = view.findViewById(R.id.horario_quinta);
-        horarioSexta = view.findViewById(R.id.horario_sexta);
-        horarioSabado = view.findViewById(R.id.horario_sabado);
+        nomeSessao = view.findViewById(R.id.nome_text_view);
+        jogoSessao = view.findViewById(R.id.jogo_text_view);
+        inicioSessao = view.findViewById(R.id.inicio_text_view);
+        fimSessao = view.findViewById(R.id.fim_text_view);
+        publicoSessao = view.findViewById(R.id.publico_text_view);
+        ativoSessao = view.findViewById(R.id.finalizado_text_view);
         botaoVoltar = view.findViewById(R.id.botao_voltar);
-        botaoAdicionarRemover = view.findViewById(R.id.botao_remover);
+        botaoAdicionarRemover = view.findViewById(R.id.botao_salvar_remover);
+        botaoJogadores = view.findViewById(R.id.botao_jogadores);
 
         carregarBotaoVoltar();
         carregarBotaoSalvarRemover();
@@ -164,7 +146,7 @@ public class EditarAmigoFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     getFragmentManager().beginTransaction().
-                            replace(R.id.content_frame, new AmigosFragment()).commit();
+                            replace(R.id.content_frame, new SessoesFragment()).commit();
                 }
 
             });
@@ -191,18 +173,18 @@ public class EditarAmigoFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
 
-                    List<String> listaTemp = usuarioAtual.getAmigos();
+                    List<String> listaTemp = usuarioAtual.getSessoes();
                     Iterator<String> i = listaTemp.iterator();
 
                     while (i.hasNext()){
-                        if (i.next().equals(usuarioAmigo.getIdUsuario())){
+                        if (i.next().equals(sessao.getIdSessao())){
                             i.remove();
                         }
                     }
 
-                    usuarioAtual.setAmigos(listaTemp);
+                    usuarioAtual.setSessoes(listaTemp);
 
-                    listaTemp = usuarioAmigo.getAmigos();
+                    listaTemp = sessao.getUsuarios();
                     i = listaTemp.iterator();
 
                     while (i.hasNext()){
@@ -211,14 +193,14 @@ public class EditarAmigoFragment extends Fragment {
                         }
                     }
 
-                    usuarioAmigo.setAmigos(listaTemp);
+                    sessao.setUsuarios(listaTemp);
 
                     databaseReference.child("usuarios").child(usuarioAtual.getIdUsuario()).setValue(usuarioAtual);
 
-                    databaseReference.child("usuarios").child(usuarioAmigo.getIdUsuario()).setValue(usuarioAmigo);
+                    databaseReference.child("sessoes").child(sessao.getIdSessao()).setValue(sessao);
 
                     getFragmentManager().beginTransaction().
-                            replace(R.id.content_frame, new AmigosFragment()).commit();
+                            replace(R.id.content_frame, new SessoesFragment()).commit();
 
                 }
 
@@ -232,14 +214,14 @@ public class EditarAmigoFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
 
-                    usuarioAtual.getAmigos().add(usuarioAmigo.getIdUsuario());
+                    usuarioAtual.getSessoes().add(sessao.getIdSessao());
                     databaseReference.child("usuarios").child(usuarioAtual.getIdUsuario()).setValue(usuarioAtual);
 
-                    usuarioAmigo.getAmigos().add(usuarioAtual.getIdUsuario());
-                    databaseReference.child("usuarios").child(usuarioAmigo.getIdUsuario()).setValue(usuarioAmigo);
+                    sessao.getUsuarios().add(usuarioAtual.getIdUsuario());
+                    databaseReference.child("sessoes").child(sessao.getIdSessao()).setValue(sessao);
 
                     getFragmentManager().beginTransaction().
-                            replace(R.id.content_frame, new AmigosFragment()).commit();
+                            replace(R.id.content_frame, new SessoesFragment()).commit();
                 }
 
             });
@@ -250,7 +232,7 @@ public class EditarAmigoFragment extends Fragment {
 
     public void carregarParametros(){
 
-        amigoId = getArguments().getString("idAmigo");
+        idSessao = getArguments().getString("idSessao");
         tipoProcedimento = getArguments().getInt("tipo");
 
     }

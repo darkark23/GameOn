@@ -1,6 +1,8 @@
 package br.com.daniel.gameon.adapter;
 
+import android.app.FragmentManager;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,17 +27,23 @@ import br.com.daniel.gameon.R;
 import br.com.daniel.gameon.entity.Jogo;
 import br.com.daniel.gameon.entity.Sessao;
 import br.com.daniel.gameon.entity.Usuario;
+import br.com.daniel.gameon.fragments.EditarGamesFragment;
+import br.com.daniel.gameon.fragments.EditarSessoesFragment;
 import br.com.daniel.gameon.util.DataUtil;
 
 public class SessaoAdapter extends RecyclerView.Adapter<SessaoAdapter.ViewHolder> {
 
+    private Integer tipo;
     private List<Sessao> listaSessao = new ArrayList<Sessao>();
     private Context context;
+    private FragmentManager fragmentManager;
 
-    public SessaoAdapter(List<Sessao> listaSessao, Context context) {
+    public SessaoAdapter(List<Sessao> listaSessao, Context context, FragmentManager fragmentManager, Integer tipo) {
 
         this.listaSessao = listaSessao;
         this.context = context;
+        this.tipo = tipo;
+        this.fragmentManager = fragmentManager;
 
     }
 
@@ -49,7 +57,7 @@ public class SessaoAdapter extends RecyclerView.Adapter<SessaoAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         Log.d(TAG,"onBindViewHolder: called");
         holder.nomeSessao.setText(listaSessao.get(position).getNomeSessao());
@@ -88,7 +96,22 @@ public class SessaoAdapter extends RecyclerView.Adapter<SessaoAdapter.ViewHolder
         holder.layoutSessao.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"ok",Toast.LENGTH_SHORT).show();
+
+                EditarSessoesFragment editarSessoesFragment = new EditarSessoesFragment();
+                Bundle args = new Bundle();
+                args.putString("idSessao",listaSessao.get(position).getIdSessao());
+                if (tipo == 1){
+                    args.putInt("tipo",1);
+                    editarSessoesFragment.setArguments(args);
+                    fragmentManager.beginTransaction().
+                            replace(R.id.content_frame, editarSessoesFragment).commit();
+                } else {
+                    args.putInt("tipo",2);
+                    editarSessoesFragment.setArguments(args);
+                    fragmentManager.beginTransaction().
+                            replace(R.id.content_frame, editarSessoesFragment).addToBackStack(null).commit();
+                }
+
             }
         });
 
