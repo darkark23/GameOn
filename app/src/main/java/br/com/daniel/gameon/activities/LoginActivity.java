@@ -35,14 +35,14 @@ import br.com.daniel.gameon.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText userLogin;
-    EditText passwordLogin;
+    private EditText userLogin;
+    private EditText passwordLogin;
 
-    ImageView loginFacebookButton;
-    ImageView loginGoogleButton;
-    CallbackManager callbackManager;
+    private ImageView loginFacebookButton;
+    private ImageView loginGoogleButton;
+    private CallbackManager callbackManager;
 
-    public FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     private GoogleSignInClient mGoogleSignInClient;
 
