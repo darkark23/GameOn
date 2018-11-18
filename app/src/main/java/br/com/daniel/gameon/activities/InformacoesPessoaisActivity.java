@@ -13,16 +13,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 
 import br.com.daniel.gameon.Manifest;
 import br.com.daniel.gameon.R;
 
 public class InformacoesPessoaisActivity extends AppCompatActivity {
 
-    public ImageView profilePicture;
-    public ImageView editProfilePicture;
-    public final int GALLERY_IMAGES = 1;
-    public final int PERMISSAO_REQUEST = 2;
+    private ImageView profilePicture;
+    private ImageView editProfilePicture;
+    private ProgressBar progressBar;
+
+    private final int GALLERY_IMAGES = 1;
+    private final int PERMISSAO_REQUEST = 2;
+
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +55,8 @@ public class InformacoesPessoaisActivity extends AppCompatActivity {
 
         profilePicture = (ImageView) findViewById(R.id.profilePicture);
         editProfilePicture = (ImageView) findViewById(R.id.editProfilePicture);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
 
         editProfilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +80,26 @@ public class InformacoesPessoaisActivity extends AppCompatActivity {
             c.close();
             Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
             profilePicture.setImageBitmap(thumbnail);
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] dataProfilePicture = baos.toByteArray();
+
+            String storagePath = "profilePictures/" + this.mAuth.getCurrentUser().getUid() + ".png";
+            StorageReference storagePathReference = storage.getReference(storagePath);
+            UploadTask uploadTask = storagePathReference.putBytes(dataProfilePicture);
+
+            editProfilePicture.setEnabled(false);
+            progressBar.setVisibility(View.VISIBLE);
+
+            uploadTask.addOnSuccessListener(InformacoesPessoaisActivity.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    progressBar.setVisibility(View.GONE);
+                    editProfilePicture.setEnabled(true);
+                }
+            });
+
         }
     }
 
