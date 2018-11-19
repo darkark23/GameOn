@@ -32,6 +32,7 @@ public class SessoesProcuraFragment extends Fragment {
         verificaAutenticacao();
         view = inflater.inflate(R.layout.games_procurar_fragment,container,false);
         campoNome = view.findViewById(R.id.campo_nome);
+        adicionarBotaoCriar();
         adicionarBotaoPesquisar();
         adicionarBotaoVoltar();
         return view;
@@ -50,6 +51,23 @@ public class SessoesProcuraFragment extends Fragment {
 
             }
         };
+    }
+
+    public void adicionarBotaoCriar(){
+
+        Button botaoCriar = view.findViewById(R.id.botao_criar);
+        botaoCriar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                getFragmentManager().beginTransaction().
+                        replace(R.id.content_frame, new SessoesCriarFragment()).commit();
+
+            }
+
+        });
+
     }
 
     public void adicionarBotaoVoltar(){
