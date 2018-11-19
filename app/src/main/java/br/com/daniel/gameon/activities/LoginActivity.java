@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -35,14 +36,14 @@ import br.com.daniel.gameon.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText userLogin;
-    EditText passwordLogin;
+    private EditText userLogin;
+    private EditText passwordLogin;
 
-    ImageView loginFacebookButton;
-    ImageView loginGoogleButton;
-    CallbackManager callbackManager;
+    private ImageView loginFacebookButton;
+    private ImageView loginGoogleButton;
+    private CallbackManager callbackManager;
 
-    public FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     private GoogleSignInClient mGoogleSignInClient;
 

@@ -1,0 +1,47 @@
+[2018-10-24 18:47:08.107] [sharedprocess] [info] main {"machineId":"604680a7c13c52ef973b5c2021fb650b9ba8220540ada9be08f96dfa51fd67a9"}
+[2018-10-24 18:47:11.062] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 18:47:12.420] [sharedprocess] [info] Scanned system extensions: 71
+[2018-10-24 18:47:12.660] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 18:47:12.661] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 18:47:12.667] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 18:47:12.729] [sharedprocess] [info] Scanned system extensions: 71
+[2018-10-24 18:47:12.736] [sharedprocess] [info] Scanned system extensions: 71
+[2018-10-24 18:47:15.438] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 18:47:17.177] [sharedprocess] [info] Installing extension: Angular-BeastCode
+[2018-10-24 18:47:17.213] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 18:47:20.287] [sharedprocess] [info] Downloaded extension: Angular-BeastCode /tmp/ccfcab5d-bf98-48bc-9dc3-be8f4a908285
+[2018-10-24 18:47:20.864] [sharedprocess] [info] Extracted extension to /root/.vscode/extensions/.mikael.angular-beastcode-7.0.6: mikael.angular-beastcode-7.0.6
+[2018-10-24 18:47:20.864] [sharedprocess] [info] Renamed to /root/.vscode/extensions/mikael.angular-beastcode-7.0.6
+[2018-10-24 18:47:20.864] [sharedprocess] [info] Installation completed. mikael.angular-beastcode-7.0.6
+[2018-10-24 18:47:21.986] [sharedprocess] [info] Extensions installed successfully: mikael.angular-beastcode
+[2018-10-24 18:47:22.143] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 18:47:22.155] [sharedprocess] [info] Scanned system extensions: 71
+[2018-10-24 18:47:48.121] [sharedprocess] [info] Starting to clean up unused language packs.
+[2018-10-24 18:52:17.892] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 18:57:18.505] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 19:02:18.829] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 19:07:18.881] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 19:12:18.904] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 22:54:52.136] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 22:59:52.190] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 23:04:52.219] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 23:09:52.244] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 23:14:52.323] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 23:19:52.386] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 23:24:52.443] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 23:29:53.971] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 23:34:54.045] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 23:39:54.102] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 23:44:54.171] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 23:49:54.220] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 23:54:54.607] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-24 23:59:54.718] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-25 00:04:55.037] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-25 00:09:55.664] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-25 00:14:56.315] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-25 00:19:56.574] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-25 00:24:56.631] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-25 00:29:56.757] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-25 00:34:57.067] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-25 00:39:57.290] [sharedprocess] [info] Scanned user extensions: 25
+[2018-10-25 09:27:32.907] [sharedprocess] [info] Scanned user extensions: 25

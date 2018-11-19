@@ -1,0 +1,3 @@
+[Info  - 19:50:50] Linter is running.
+Warning: The 'no-use-before-declare' rule requires type checking
+[Warn  - 19:53:47] Warning: The 'no-use-before-declare' rule requires type checking
