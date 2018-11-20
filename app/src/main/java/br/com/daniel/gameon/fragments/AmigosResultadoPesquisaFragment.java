@@ -43,10 +43,10 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         verificaAutenticacao();
-
+        getActivity().setTitle("Amigos - Resutado usuários");
         view = inflater.inflate(R.layout.amigos_resultado_pesquisa_fragment, container, false);
         nomePesquisa = getArguments().getString("nomePesquisa");
-        adicionarBotaoVoltar();
+        carregarBotaoVoltar();
         carregarUsuario();
 
         return view;
@@ -136,16 +136,16 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
 
     }
 
-    public void adicionarBotaoVoltar(){
+    public void carregarBotaoVoltar(){
 
-        Button botaoVoltar = view.findViewById(R.id.botao_voltar);
-        botaoVoltar.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton btn =(FloatingActionButton) view.findViewById(R.id.botao_voltar);
 
-            @Override
+        btn.setOnClickListener( new View.OnClickListener(){
+
             public void onClick(View view) {
 
                 getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, new AmigoProcuraFragment()).commit();
+                        replace(R.id.content_frame, new AmigoProcuraFragment()).addToBackStack("AmigoProcuraFragment").commit();
 
             }
 

@@ -8,11 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_toRightOf="@id/imagem_sessao">
+        android:layout_toRightOf="@id/imagem_jogo">
 
-        <TableRow
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/nome_sessao"
@@ -20,15 +20,15 @@
                 android:layout_height="wrap_content"
                 android:text="NomeSessao"
                 android:textSize="17sp" />
-        </TableRow>
+        </LinearLayout>
 
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="match_parent" >
 
             <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
 
                 <TextView
                     android:id="@+id/nome_jogo_sessao"
@@ -39,8 +39,8 @@
             </TableRow>
 
             <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
 
                 <TextView
                     android:id="@+id/encerrado_sessao"
@@ -59,7 +59,7 @@
 
             <TableRow
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" >
+                android:layout_height="wrap_content" >
 
                 <TextView
                     android:id="@+id/inicio_sessao"
@@ -71,7 +71,7 @@
 
             <TableRow
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/fim_sessao"
@@ -91,7 +91,7 @@
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:id="@+id/imagem_sessao"
+        android:id="@+id/imagem_jogo"
         android:src="@mipmap/ic_launcher"/>
 
 

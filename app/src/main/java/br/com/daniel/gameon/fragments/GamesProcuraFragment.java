@@ -30,6 +30,7 @@ public class GamesProcuraFragment extends Fragment {
 
 
         verificaAutenticacao();
+        getActivity().setTitle("Games - Buscar games");
         view = inflater.inflate(R.layout.games_procurar_fragment,container,false);
         campoNome = view.findViewById(R.id.campo_nome);
         adicionarBotaoPesquisar();
@@ -61,7 +62,7 @@ public class GamesProcuraFragment extends Fragment {
             public void onClick(View view) {
 
                 getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, new GamesFragment()).commit();
+                        replace(R.id.content_frame, new GamesFragment()).addToBackStack("GamesFragment").commit();
 
             }
 
@@ -87,7 +88,7 @@ public class GamesProcuraFragment extends Fragment {
                 gamesResultadoPesquisaFragment.setArguments(bundle);
 
                 getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, gamesResultadoPesquisaFragment).commit();
+                        replace(R.id.content_frame, gamesResultadoPesquisaFragment).addToBackStack("GamesResultadoPesquisaFragment").commit();
 
             }
 

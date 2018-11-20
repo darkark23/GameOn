@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -120,6 +121,12 @@ public class EditarSessoesFragment extends Fragment {
 
     public void carregarInterface(LayoutInflater inflater,ViewGroup container){
 
+        if(tipoProcedimento == 1){
+            getActivity().setTitle("Sessões - Informações");
+        }else {
+            getActivity().setTitle("Sessões - Participar da Sessão");
+        }
+
         view = inflater.inflate(R.layout.sessoes_editar_fragment,container,false);
 
         nomeSessao = view.findViewById(R.id.nome_text_view);
@@ -130,10 +137,13 @@ public class EditarSessoesFragment extends Fragment {
         ativoSessao = view.findViewById(R.id.finalizado_text_view);
         botaoVoltar = view.findViewById(R.id.botao_voltar);
         botaoAdicionarRemover = view.findViewById(R.id.botao_salvar_remover);
-        botaoJogadores = view.findViewById(R.id.botao_jogadores);
 
         carregarBotaoVoltar();
         carregarBotaoSalvarRemover();
+
+        botaoJogadores = view.findViewById(R.id.botao_jogadores);
+        carregarBotaoAdicionar();
+
 
     }
 
@@ -146,7 +156,7 @@ public class EditarSessoesFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     getFragmentManager().beginTransaction().
-                            replace(R.id.content_frame, new SessoesFragment()).commit();
+                            replace(R.id.content_frame, new SessoesFragment()).addToBackStack("SessoesFragment").commit();
                 }
 
             });
@@ -200,7 +210,9 @@ public class EditarSessoesFragment extends Fragment {
                     databaseReference.child("sessoes").child(sessao.getIdSessao()).setValue(sessao);
 
                     getFragmentManager().beginTransaction().
-                            replace(R.id.content_frame, new SessoesFragment()).commit();
+                            replace(R.id.content_frame, new SessoesFragment()).addToBackStack("SessoesFragment").commit();
+
+                    Toast.makeText(view.getContext(), "Você saiu da sessão!", Toast.LENGTH_LONG).show();
 
                 }
 
@@ -221,12 +233,37 @@ public class EditarSessoesFragment extends Fragment {
                     databaseReference.child("sessoes").child(sessao.getIdSessao()).setValue(sessao);
 
                     getFragmentManager().beginTransaction().
-                            replace(R.id.content_frame, new SessoesFragment()).commit();
+                            replace(R.id.content_frame, new SessoesFragment()).addToBackStack("SessoesFragment").commit();;
+
+                    Toast.makeText(view.getContext(), "Você esta participando da sessão escolhida!", Toast.LENGTH_LONG).show();
                 }
 
             });
 
         }
+
+    }
+
+    public void carregarBotaoAdicionar(){
+
+        botaoJogadores.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("idSessaoAtual",sessao.getIdSessao());
+
+                SessoesListaAmigosFragment sessoesListaAmigosFragment = new SessoesListaAmigosFragment();
+                sessoesListaAmigosFragment.setArguments(bundle);
+
+                getFragmentManager().beginTransaction().
+                        replace(R.id.content_frame, sessoesListaAmigosFragment).commit();
+
+            }
+
+        });
+
 
     }
 

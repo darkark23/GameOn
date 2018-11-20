@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +24,7 @@ import br.com.daniel.gameon.activities.MenuPrincipalActivity;
 import br.com.daniel.gameon.entity.Horarios;
 import br.com.daniel.gameon.entity.Usuario;
 import br.com.daniel.gameon.util.DataUtil;
+import br.com.daniel.gameon.util.DownloadImagemUtil;
 
 public class PerfilFragment extends Fragment {
 
@@ -36,7 +38,7 @@ public class PerfilFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         verificaAutenticacao();
-
+        getActivity().setTitle("Perfil - Principal");
         view = inflater.inflate(R.layout.perfil_fragment,container,false);
 
         carregarPerfil();
@@ -50,6 +52,7 @@ public class PerfilFragment extends Fragment {
         String idUsuario = firebaseAuth.getCurrentUser().getUid();
 
         final TextView fraseUsuario = view.findViewById(R.id.frase_usuario);
+        final ImageView imagemUsuario = view.findViewById(R.id.imagem_usuario);
         final TextView nomeUsuario = view.findViewById(R.id.nome_usuario);
 
         databaseReference.child("usuarios").orderByChild("idAutenticacao").startAt(idUsuario).endAt(idUsuario)
@@ -61,6 +64,9 @@ public class PerfilFragment extends Fragment {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 Usuario usuario = children.iterator().next().getValue(Usuario.class);
 
+                if (usuario.getUrlImagem()!= null){
+                    new DownloadImagemUtil(imagemUsuario).execute(usuario.getUrlImagem());
+                }
                 nomeUsuario.setText(usuario.getNomeUsuario());
                 fraseUsuario.setText(usuario.getFrase());
 

@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +29,7 @@ import br.com.daniel.gameon.entity.Horarios;
 import br.com.daniel.gameon.entity.Jogo;
 import br.com.daniel.gameon.entity.Usuario;
 import br.com.daniel.gameon.util.DataUtil;
+import br.com.daniel.gameon.util.DownloadImagemUtil;
 import br.com.daniel.gameon.util.HorariosUtil;
 
 public class EditarGamesFragment extends Fragment {
@@ -43,6 +46,7 @@ public class EditarGamesFragment extends Fragment {
     private Usuario usuarioAtual;
     private Jogo game;
 
+    private ImageView imagemGame;
     private TextView nomeGame;
     private TextView descricaoGame;
     private Button botaoVoltar;
@@ -71,6 +75,10 @@ public class EditarGamesFragment extends Fragment {
 
                         Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                         game = children.iterator().next().getValue(Jogo.class);
+
+                        if (game.getUrlImagem()!= null){
+                            new DownloadImagemUtil(imagemGame).execute(game.getUrlImagem());
+                        }
                         nomeGame.setText(game.getNome());
                         descricaoGame.setText(game.getDescricao());
                     }
@@ -87,8 +95,17 @@ public class EditarGamesFragment extends Fragment {
 
     public void carregarInterface(LayoutInflater inflater,ViewGroup container){
 
+        if(tipoProcedimento == 1){
+            getActivity().setTitle("Games - Informações");
+        }else {
+            getActivity().setTitle("Games - Adicionar Game");
+        }
+
+        getActivity().setTitle("Amigos");
+
         view = inflater.inflate(R.layout.games_editar_fragment,container,false);
 
+        imagemGame = view.findViewById(R.id.imagem_game);
         nomeGame = view.findViewById(R.id.nome_game);
         descricaoGame = view.findViewById(R.id.descricao_game);
         botaoVoltar = view.findViewById(R.id.botao_voltar);
@@ -108,7 +125,7 @@ public class EditarGamesFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     getFragmentManager().beginTransaction().
-                            replace(R.id.content_frame, new GamesFragment()).commit();
+                            replace(R.id.content_frame, new GamesFragment()).addToBackStack("GamesFragment").commit();
                 }
 
             });
@@ -162,7 +179,9 @@ public class EditarGamesFragment extends Fragment {
                     databaseReference.child("jogos").child(game.getIdJogo()).setValue(game);
 
                     getFragmentManager().beginTransaction().
-                            replace(R.id.content_frame, new GamesFragment()).commit();
+                            replace(R.id.content_frame, new GamesFragment()).addToBackStack("GamesFragment").commit();
+
+                    Toast.makeText(view.getContext(), "Game removido com sucesso!", Toast.LENGTH_LONG).show();
 
                 }
 
@@ -183,7 +202,9 @@ public class EditarGamesFragment extends Fragment {
                     databaseReference.child("jogos").child(game.getIdJogo()).setValue(game);
 
                     getFragmentManager().beginTransaction().
-                            replace(R.id.content_frame, new GamesFragment()).commit();
+                            replace(R.id.content_frame, new GamesFragment()).addToBackStack("GamesFragment").commit();
+
+                    Toast.makeText(view.getContext(), "Game adicionado com sucesso!", Toast.LENGTH_LONG).show();
                 }
 
             });

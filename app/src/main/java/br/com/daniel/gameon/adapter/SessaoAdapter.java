@@ -30,6 +30,7 @@ import br.com.daniel.gameon.entity.Usuario;
 import br.com.daniel.gameon.fragments.EditarGamesFragment;
 import br.com.daniel.gameon.fragments.EditarSessoesFragment;
 import br.com.daniel.gameon.util.DataUtil;
+import br.com.daniel.gameon.util.DownloadImagemUtil;
 
 public class SessaoAdapter extends RecyclerView.Adapter<SessaoAdapter.ViewHolder> {
 
@@ -75,6 +76,10 @@ public class SessaoAdapter extends RecyclerView.Adapter<SessaoAdapter.ViewHolder
                         Jogo jogo = children.iterator().next().getValue(Jogo.class);
                         holder.nomeJogoSessao.setText(jogo.getNome());
 
+                        if (jogo.getUrlImagem()!= null){
+                            new DownloadImagemUtil(holder.imageSessao).execute(jogo.getUrlImagem());
+                        }
+
                     }
 
                     @Override
@@ -104,12 +109,12 @@ public class SessaoAdapter extends RecyclerView.Adapter<SessaoAdapter.ViewHolder
                     args.putInt("tipo",1);
                     editarSessoesFragment.setArguments(args);
                     fragmentManager.beginTransaction().
-                            replace(R.id.content_frame, editarSessoesFragment).commit();
+                            replace(R.id.content_frame, editarSessoesFragment).addToBackStack("EditarSessoesFragment").commit();
                 } else {
                     args.putInt("tipo",2);
                     editarSessoesFragment.setArguments(args);
                     fragmentManager.beginTransaction().
-                            replace(R.id.content_frame, editarSessoesFragment).addToBackStack(null).commit();
+                            replace(R.id.content_frame, editarSessoesFragment).addToBackStack("EditarSessoesFragment").commit();
                 }
 
             }

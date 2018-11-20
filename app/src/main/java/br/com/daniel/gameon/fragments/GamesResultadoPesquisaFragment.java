@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -44,10 +45,10 @@ public class GamesResultadoPesquisaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         verificaAutenticacao();
-
+        getActivity().setTitle("Games - Resutado games");
         view = inflater.inflate(R.layout.games_resultado_pesquisa_fragment, container, false);
         nomePesquisa = getArguments().getString("nomePesquisa");
-        adicionarBotaoVoltar();
+        carregarBotaoVoltar();
         carregarUsuario();
 
         return view;
@@ -135,16 +136,16 @@ public class GamesResultadoPesquisaFragment extends Fragment {
 
     }
 
-    public void adicionarBotaoVoltar(){
+    public void carregarBotaoVoltar(){
 
-        Button botaoVoltar = view.findViewById(R.id.botao_voltar);
-        botaoVoltar.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton btn =(FloatingActionButton) view.findViewById(R.id.botao_voltar);
 
-            @Override
+        btn.setOnClickListener( new View.OnClickListener(){
+
             public void onClick(View view) {
 
                 getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, new GamesProcuraFragment()).commit();
+                        replace(R.id.content_frame, new GamesProcuraFragment()).addToBackStack("GamesProcuraFragment").commit();
 
             }
 
@@ -160,7 +161,9 @@ public class GamesResultadoPesquisaFragment extends Fragment {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
                 if (firebaseAuth.getCurrentUser() != null){
+
                     startActivity( new Intent(view.getContext(), MenuPrincipalActivity.class));
+
                 }
 
             }

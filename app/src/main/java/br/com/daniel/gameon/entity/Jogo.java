@@ -10,6 +10,7 @@ public class Jogo {
     private String idImagem;
     private String nome;
     private String descricao;
+    private String urlImagem;
     private List<String> jogadores = new ArrayList<>();
 
     public Jogo() {
@@ -26,6 +27,14 @@ public class Jogo {
     public Jogo(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
+    }
+
+    public String getUrlImagem() {
+        return urlImagem;
+    }
+
+    public void setUrlImagem(String urlImagem) {
+        this.urlImagem = urlImagem;
     }
 
     public String getIdJogo() {

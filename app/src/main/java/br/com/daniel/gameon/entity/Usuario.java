@@ -10,6 +10,7 @@ public class Usuario {
     private String idImagem;
     private String idUsuario;
     private String idHorarios;
+    private String urlImagem;
     private String nomeUsuario;
     private String nomeComlpeto;
     private String frase;
@@ -42,6 +43,14 @@ public class Usuario {
         this.nomeComlpeto = nomeComlpeto;
         this.frase = frase;
         this.amigos = amigos;
+    }
+
+    public String getUrlImagem() {
+        return urlImagem;
+    }
+
+    public void setUrlImagem(String urlImagem) {
+        this.urlImagem = urlImagem;
     }
 
     public String getIdAutenticacao() {

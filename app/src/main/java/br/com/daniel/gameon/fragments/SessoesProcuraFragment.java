@@ -30,7 +30,8 @@ public class SessoesProcuraFragment extends Fragment {
 
 
         verificaAutenticacao();
-        view = inflater.inflate(R.layout.games_procurar_fragment,container,false);
+        getActivity().setTitle("Sessões - Buscar sessões");
+        view = inflater.inflate(R.layout.sessoes_procurar_fragment_02,container,false);
         campoNome = view.findViewById(R.id.campo_nome);
         adicionarBotaoCriar();
         adicionarBotaoPesquisar();
@@ -79,7 +80,7 @@ public class SessoesProcuraFragment extends Fragment {
             public void onClick(View view) {
 
                 getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, new SessoesFragment()).commit();
+                        replace(R.id.content_frame, new SessoesFragment()).addToBackStack("SessoesFragment").commit();
 
             }
 
@@ -105,7 +106,7 @@ public class SessoesProcuraFragment extends Fragment {
                 sessoesResultadoPesquisaFragment.setArguments(bundle);
 
                 getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, sessoesResultadoPesquisaFragment).commit();
+                        replace(R.id.content_frame, sessoesResultadoPesquisaFragment).addToBackStack("SessoesResultadoPesquisaFragment").commit();
 
             }
 

@@ -44,10 +44,11 @@ public class SessoesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         verificaAutenticacao();
-
+        getActivity().setTitle("Sessões");
         view = inflater.inflate(R.layout.sessoes_fragment,container,false);
 
         carregarBotaoAdicionar();
+        carregarBotaoVoltar();
         carregarUsuario();
 
         return view;
@@ -157,10 +158,27 @@ public class SessoesFragment extends Fragment {
             public void onClick(View view) {
 
                 getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, new SessoesProcuraFragment()).commit();
+                        replace(R.id.content_frame, new SessoesProcuraFragment()).addToBackStack("SessoesProcuraFragment").commit();
 
             }
 
         });
+    }
+
+    public void carregarBotaoVoltar(){
+
+        FloatingActionButton btn =(FloatingActionButton) view.findViewById(R.id.botao_voltar);
+
+        btn.setOnClickListener( new View.OnClickListener(){
+
+            public void onClick(View view) {
+
+                getFragmentManager().beginTransaction().
+                        replace(R.id.content_frame, new PerfilFragment()).addToBackStack("PerfilFragment").commit();
+
+            }
+
+        });
+
     }
 }

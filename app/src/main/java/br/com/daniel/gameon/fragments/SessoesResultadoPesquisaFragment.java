@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -45,10 +46,10 @@ public class SessoesResultadoPesquisaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         verificaAutenticacao();
-
+        getActivity().setTitle("Sessões - Resultado sessões");
         view = inflater.inflate(R.layout.sessoes_resultado_pesquisa_fragment, container, false);
         nomePesquisa = getArguments().getString("nomePesquisa");
-        adicionarBotaoVoltar();
+        carregarBotaoVoltar();
         carregarUsuario();
 
         return view;
@@ -136,16 +137,16 @@ public class SessoesResultadoPesquisaFragment extends Fragment {
 
     }
 
-    public void adicionarBotaoVoltar(){
+    public void carregarBotaoVoltar(){
 
-        Button botaoVoltar = view.findViewById(R.id.botao_voltar);
-        botaoVoltar.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton btn =(FloatingActionButton) view.findViewById(R.id.botao_voltar);
 
-            @Override
+        btn.setOnClickListener( new View.OnClickListener(){
+
             public void onClick(View view) {
 
                 getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, new SessoesProcuraFragment()).commit();
+                        replace(R.id.content_frame, new SessoesProcuraFragment()).addToBackStack("SessoesProcuraFragment").commit();
 
             }
 

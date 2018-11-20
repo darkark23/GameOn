@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="Digite um nome para a sessão..."
+                android:hint="Digite um nome para a sessão..."
                 android:textColor="#FFFFFF"
                 android:textSize="18dp" />
         </TableRow>
@@ -87,7 +87,7 @@
                 android:layout_width="354dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="Escolha o game da sessão"
+                android:hint="Escolha o game da sessão..."
                 android:completionHint="Escolha um Jogo"
                 android:completionThreshold="1"
                 android:textColor="#FFFFFF"

@@ -20,6 +20,7 @@ import br.com.daniel.gameon.R;
 import br.com.daniel.gameon.entity.Jogo;
 import br.com.daniel.gameon.fragments.EditarAmigoFragment;
 import br.com.daniel.gameon.fragments.EditarGamesFragment;
+import br.com.daniel.gameon.util.DownloadImagemUtil;
 
 public class JogoAdapter extends RecyclerView.Adapter<JogoAdapter.ViewHolder> {
 
@@ -58,6 +59,11 @@ public class JogoAdapter extends RecyclerView.Adapter<JogoAdapter.ViewHolder> {
 
         Log.d(TAG,"onBindViewHolder: called");
         holder.nomeJogo.setText(listaJogo.get(position).getNome());
+
+        if (listaJogo.get(position).getUrlImagem()!= null){
+            new DownloadImagemUtil(holder.imageJogo).execute(listaJogo.get(position).getUrlImagem());
+        }
+
         holder.layoutJogo.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -69,12 +75,12 @@ public class JogoAdapter extends RecyclerView.Adapter<JogoAdapter.ViewHolder> {
                     args.putInt("tipo",1);
                     editarGamesFragment.setArguments(args);
                     fragmentManager.beginTransaction().
-                            replace(R.id.content_frame, editarGamesFragment).commit();
+                            replace(R.id.content_frame, editarGamesFragment).addToBackStack("EditarGamesFragment").commit();
                 } else {
                     args.putInt("tipo",2);
                     editarGamesFragment.setArguments(args);
                     fragmentManager.beginTransaction().
-                            replace(R.id.content_frame, editarGamesFragment).addToBackStack(null).commit();
+                            replace(R.id.content_frame, editarGamesFragment).addToBackStack("EditarGamesFragment").commit();
                 }
 
             }

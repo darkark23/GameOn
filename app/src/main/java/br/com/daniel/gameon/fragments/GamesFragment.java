@@ -42,10 +42,11 @@ public class GamesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         verificaAutenticacao();
-
+        getActivity().setTitle("Games");
         view = inflater.inflate(R.layout.games_fragment,container,false);
 
         carregarBotaoAdicionar();
+        carregarBotaoVoltar();
         carregarUsuario();
 
         return view;
@@ -156,11 +157,28 @@ public class GamesFragment extends Fragment {
             public void onClick(View view) {
 
                 getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, new GamesProcuraFragment()).commit();
+                        replace(R.id.content_frame, new GamesProcuraFragment()).addToBackStack("GamesProcuraFragment").commit();
 
             }
 
         });
+    }
+
+    public void carregarBotaoVoltar(){
+
+        FloatingActionButton btn =(FloatingActionButton) view.findViewById(R.id.botao_voltar);
+
+        btn.setOnClickListener( new View.OnClickListener(){
+
+            public void onClick(View view) {
+
+                getFragmentManager().beginTransaction().
+                        replace(R.id.content_frame, new PerfilFragment()).addToBackStack("PerfilFragment").commit();
+
+            }
+
+        });
+
     }
 
 }

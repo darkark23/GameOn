@@ -23,7 +23,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
-import br.com.daniel.gameon.Manifest;
 import br.com.daniel.gameon.R;
 
 public class InformacoesPessoaisActivity extends AppCompatActivity {

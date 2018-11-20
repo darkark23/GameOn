@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -86,6 +87,7 @@ public class SessoesCriarFragment extends Fragment {
 
     public void carregarInterface(LayoutInflater inflater,ViewGroup container){
 
+        getActivity().setTitle("Sessões - Criar sessão");
         view = inflater.inflate(R.layout.sessoes_criar_fragment,container,false);
 
         nomeSessaoEditText = view.findViewById(R.id.campo_nome);
@@ -268,34 +270,70 @@ public class SessoesCriarFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                sessao = new Sessao();
-                sessao.setDataFim(DataUtil.formatCalendarBanco(dataFimTemp));
-                sessao.setDataInicio(DataUtil.formatCalendarBanco(dataInicioTemp));
-                sessao.setIdUsuarioAdministrador(usuarioAtual.getIdUsuario());
-                sessao.setAtivo("S");
-                sessao.setNomeSessao(nomeSessaoEditText.getText().toString());
-                if (publicoSpinner.getSelectedItem().toString().equals("Sim")){
-                    sessao.setPublico(true);
-                } else {
-                    sessao.setPublico(false);
+                Calendar agora = Calendar.getInstance();
+                Boolean existeJogo = false;
+                String nomeJogo = gamesAutoCompleteTextView.getText().toString();
+
+                if (gamesAutoCompleteTextView.getText().toString() != null){
+
+                    for (String jogo: listaGamesNome ){
+                        if (jogo.equals(nomeJogo)){
+                            existeJogo = true;
+                            break;
+                        }
+                    }
+
                 }
 
-                sessao.getUsuarios().add(usuarioAtual.getIdUsuario());
+                if (dataFimTemp == null){
+                    Toast.makeText(view.getContext(),"Selecione uma data para o fim da sessão!",Toast.LENGTH_LONG).show();
+                } else if (dataInicioTemp == null){
+                    Toast.makeText(view.getContext(),"Selecione uma data para o começo da sessão!",Toast.LENGTH_LONG).show();
+                } else if (dataFimTemp.before(agora) || dataInicioTemp.before(agora)){
+                    Toast.makeText(view.getContext(),"As datas da sessão devem ser depois da data atual!",Toast.LENGTH_LONG).show();
+                } else if (dataFimTemp.before(dataInicioTemp)){
+                    Toast.makeText(view.getContext(),"A data de fim da sessão deve ser antes da data de inicio!",Toast.LENGTH_LONG).show();
+                } else if (nomeSessaoEditText.getText().toString().equals("")){
+                    Toast.makeText(view.getContext(),"Digite um nome para sessão!",Toast.LENGTH_LONG).show();
+                } else if (gamesAutoCompleteTextView.getText().toString().equals("")){
+                    Toast.makeText(view.getContext(),"Escolha um game para a sessão!",Toast.LENGTH_LONG).show();
+                } else if (!existeJogo){
+                    Toast.makeText(view.getContext(),"O game escolhido não existe!",Toast.LENGTH_LONG).show();
+                } else {
 
-                sessao.setIdSessao(databaseReference.child("sessoes").push().getKey());
+                    sessao = new Sessao();
+                    sessao.setDataFim(DataUtil.formatCalendarBanco(dataFimTemp));
+                    sessao.setDataInicio(DataUtil.formatCalendarBanco(dataInicioTemp));
+                    sessao.setIdUsuarioAdministrador(usuarioAtual.getIdUsuario());
+                    sessao.setAtivo("S");
+                    sessao.setNomeSessao(nomeSessaoEditText.getText().toString());
+                    if (publicoSpinner.getSelectedItem().toString().equals("Sim")){
+                        sessao.setPublico(true);
+                    } else {
+                        sessao.setPublico(false);
+                    }
 
-                String nomeJogo = gamesAutoCompleteTextView.getText().toString();
-                Integer index = listaGamesNome.indexOf(nomeJogo);
+                    sessao.getUsuarios().add(usuarioAtual.getIdUsuario());
 
-                sessao.setIdJogo(listaGames.get(index).getIdJogo());
+                    sessao.setIdSessao(databaseReference.child("sessoes").push().getKey());
 
-                databaseReference.child("sessoes").child(sessao.getIdSessao()).setValue(sessao);
+                    Integer index = listaGamesNome.indexOf(nomeJogo);
 
-                usuarioAtual.getSessoes().add(sessao.getIdSessao());
-                databaseReference.child("usuarios").child(usuarioAtual.getIdUsuario()).setValue(usuarioAtual);
+                    sessao.setIdJogo(listaGames.get(index).getIdJogo());
 
-                getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, new SessoesProcuraFragment()).commit();
+                    databaseReference.child("sessoes").child(sessao.getIdSessao()).setValue(sessao);
+
+                    usuarioAtual.getSessoes().add(sessao.getIdSessao());
+                    databaseReference.child("usuarios").child(usuarioAtual.getIdUsuario()).setValue(usuarioAtual);
+
+/*                    getFragmentManager().beginTransaction().
+                            replace(R.id.content_frame, new SessoesFragment()).commit();*/
+
+                    getFragmentManager().popBackStack("SessoesFragment",0);
+
+                    Toast.makeText(view.getContext(),"Sessão criada com sucesso!",Toast.LENGTH_LONG).show();
+
+                }
             }
 
         });
@@ -308,8 +346,10 @@ public class SessoesCriarFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
+
                 getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, new SessoesProcuraFragment()).commit();
+                        replace(R.id.content_frame, new SessoesProcuraFragment()).addToBackStack("SessoesProcuraFragment").commit();
+
             }
 
         });
