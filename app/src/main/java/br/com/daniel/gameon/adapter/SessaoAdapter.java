@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import br.com.daniel.gameon.R;
@@ -38,6 +39,8 @@ public class SessaoAdapter extends RecyclerView.Adapter<SessaoAdapter.ViewHolder
     private List<Sessao> listaSessao = new ArrayList<Sessao>();
     private Context context;
     private FragmentManager fragmentManager;
+    private Calendar dataAtual;
+    private Calendar dataFim;
 
     public SessaoAdapter(List<Sessao> listaSessao, Context context, FragmentManager fragmentManager, Integer tipo) {
 
@@ -89,7 +92,17 @@ public class SessaoAdapter extends RecyclerView.Adapter<SessaoAdapter.ViewHolder
 
                 });
 
-        if(listaSessao.get(position).getAtivo().equals("S")){
+        dataAtual = Calendar.getInstance();
+        dataFim = Calendar.getInstance();
+        String dataFimString = listaSessao.get(position).getDataFim();
+        dataFim.set(Integer.valueOf(dataFimString.substring(4,8)),
+                Integer.valueOf(dataFimString.substring(2,4)),
+                Integer.valueOf(dataFimString.substring(0,2)),
+                Integer.valueOf(dataFimString.substring(8,10)),
+                Integer.valueOf(dataFimString.substring(10,12)),
+                Integer.valueOf(dataFimString.substring(12,14)));
+
+        if(dataAtual.before(dataFim)){
             holder.encerradoSessao.setText("Ativo");
         } else {
             holder.encerradoSessao.setText("Encerrado");
@@ -106,10 +119,16 @@ public class SessaoAdapter extends RecyclerView.Adapter<SessaoAdapter.ViewHolder
                 Bundle args = new Bundle();
                 args.putString("idSessao",listaSessao.get(position).getIdSessao());
                 if (tipo == 1){
-                    args.putInt("tipo",1);
-                    editarSessoesFragment.setArguments(args);
-                    fragmentManager.beginTransaction().
-                            replace(R.id.content_frame, editarSessoesFragment).addToBackStack("EditarSessoesFragment").commit();
+
+                    if(dataAtual.before(dataFim)){
+                        args.putInt("tipo",1);
+                        editarSessoesFragment.setArguments(args);
+                        fragmentManager.beginTransaction().
+                                replace(R.id.content_frame, editarSessoesFragment).addToBackStack("EditarSessoesFragment").commit();
+                    } else {
+                        Toast.makeText(view.getContext(),"Essa sessão está encerrada!",Toast.LENGTH_LONG).show();
+                    }
+
                 } else {
                     args.putInt("tipo",2);
                     editarSessoesFragment.setArguments(args);

@@ -326,10 +326,8 @@ public class SessoesCriarFragment extends Fragment {
                     usuarioAtual.getSessoes().add(sessao.getIdSessao());
                     databaseReference.child("usuarios").child(usuarioAtual.getIdUsuario()).setValue(usuarioAtual);
 
-/*                    getFragmentManager().beginTransaction().
-                            replace(R.id.content_frame, new SessoesFragment()).commit();*/
-
-                    getFragmentManager().popBackStack("SessoesFragment",0);
+                    getFragmentManager().beginTransaction().
+                            replace(R.id.content_frame, new SessoesFragment()).addToBackStack("SessoesFragment").commit();
 
                     Toast.makeText(view.getContext(),"Sessão criada com sucesso!",Toast.LENGTH_LONG).show();
 

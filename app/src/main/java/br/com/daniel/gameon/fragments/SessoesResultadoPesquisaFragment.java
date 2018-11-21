@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import br.com.daniel.gameon.R;
@@ -86,8 +87,13 @@ public class SessoesResultadoPesquisaFragment extends Fragment {
 
         databaseReference.child("sessoes").orderByChild("nomeSessao").startAt(nomePesquisa).addValueEventListener(new ValueEventListener() {
 
+
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                Calendar dataAtual = Calendar.getInstance();
+                Calendar dataFim = Calendar.getInstance();
 
                 final List<Sessao> listaSessoes = new ArrayList<Sessao>();
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
@@ -95,6 +101,27 @@ public class SessoesResultadoPesquisaFragment extends Fragment {
                 for (DataSnapshot child: children) {
                     boolean repetido = false;
                     Sessao sessao = child.getValue(Sessao.class);
+
+                    if (sessao.getPublico() == false){
+                        repetido = true;
+                    }
+
+
+                    String dataFimString = sessao.getDataFim();
+                    dataFim.set(Integer.valueOf(dataFimString.substring(4,8)),
+                            Integer.valueOf(dataFimString.substring(2,4)),
+                            Integer.valueOf(dataFimString.substring(0,2)),
+                            Integer.valueOf(dataFimString.substring(8,10)),
+                            Integer.valueOf(dataFimString.substring(10,12)),
+                            Integer.valueOf(dataFimString.substring(12,14)));
+
+                    if(dataAtual.after(dataFim)){
+                        repetido = true;
+                    }
+
+                    if (sessao.getPublico() == false){
+                        repetido = true;
+                    }
 
                     for (String id:listaSessoesRegistrados){
                         if (id != null){

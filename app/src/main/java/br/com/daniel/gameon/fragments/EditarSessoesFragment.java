@@ -82,7 +82,6 @@ public class EditarSessoesFragment extends Fragment {
                         inicioSessao.setText(DataUtil.formatDataHora(sessao.getDataInicio(),6));
                         fimSessao.setText(DataUtil.formatDataHora(sessao.getDataFim(),6));
                         publicoSessao.setText(FormatUtil.publicoFormat(sessao.getPublico()));
-                        ativoSessao.setText(FormatUtil.finalizadoFormat(sessao.getAtivo()));
                         carregarJogoSessao();
                     }
 
@@ -134,7 +133,6 @@ public class EditarSessoesFragment extends Fragment {
         inicioSessao = view.findViewById(R.id.inicio_text_view);
         fimSessao = view.findViewById(R.id.fim_text_view);
         publicoSessao = view.findViewById(R.id.publico_text_view);
-        ativoSessao = view.findViewById(R.id.finalizado_text_view);
         botaoVoltar = view.findViewById(R.id.botao_voltar);
         botaoAdicionarRemover = view.findViewById(R.id.botao_salvar_remover);
 

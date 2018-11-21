@@ -27,11 +27,17 @@ import java.util.List;
 import br.com.daniel.gameon.R;
 import br.com.daniel.gameon.activities.MenuPrincipalActivity;
 import br.com.daniel.gameon.adapter.AmigoAdapter;
+import br.com.daniel.gameon.entity.Jogo;
 import br.com.daniel.gameon.entity.Usuario;
 
 public class AmigosResultadoPesquisaFragment extends Fragment {
 
-    private  String nomePesquisa;
+    private String nomePesquisa;
+    private String idGame;
+    private Jogo jogo;
+    private List<Usuario> listaAmigos;
+    private List<String> listaAmigosUsuario;
+    private List<Usuario> listaAmigosGames;
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -46,8 +52,12 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
         getActivity().setTitle("Amigos - Resutado usuários");
         view = inflater.inflate(R.layout.amigos_resultado_pesquisa_fragment, container, false);
         nomePesquisa = getArguments().getString("nomePesquisa");
-        carregarBotaoVoltar();
+        idGame = getArguments().getString("idGame");
+        carregarJogo();
         carregarUsuario();
+        carregarAmigos();
+        carregarBotaoVoltar();
+
 
         return view;
 
@@ -65,9 +75,8 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
 
                         Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                         Usuario usuario = children.iterator().next().getValue(Usuario.class);
-                        List<String> listaAmigos = usuario.getAmigos();
-                        listaAmigos.add(usuario.getIdUsuario());
-                        getAmigos(listaAmigos);
+                        listaAmigosUsuario = usuario.getAmigos();
+                        listaAmigosUsuario.add(usuario.getIdUsuario());
 
                     }
 
@@ -80,7 +89,31 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
 
     }
 
-    public void getAmigos(final List<String> listaIdAmigos){
+    public void carregarJogo(){
+
+        if (idGame != null){
+
+        databaseReference.child("jogos").orderByChild("idJogo").equalTo(idGame).addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                jogo = children.iterator().next().getValue(Jogo.class);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+        }
+    }
+
+
+    public void carregarAmigos(){
 
 
         databaseReference.child("usuarios").orderByChild("nomeUsuario").startAt(nomePesquisa).addValueEventListener(new ValueEventListener() {
@@ -88,14 +121,15 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                final List<Usuario> listaAmigos = new ArrayList<Usuario>();
+                listaAmigos = new ArrayList<Usuario>();
+                listaAmigosGames = new ArrayList<Usuario>();
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
                 for (DataSnapshot child: children) {
                     boolean repetido = false;
                     Usuario usuario = child.getValue(Usuario.class);
 
-                    for (String id:listaIdAmigos){
+                    for (String id:listaAmigosUsuario){
                         if (id != null){
                             if (id.equals(usuario.getIdUsuario())){
                                 repetido = true;
@@ -109,6 +143,21 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
                     }
 
                 }
+
+                if (idGame != null){
+
+                    for (String idJogadores: jogo.getJogadores()) {
+                        for (Usuario usuario:listaAmigos){
+                            if (usuario.getIdUsuario().equals(idJogadores)){
+                                listaAmigosGames.add(usuario);
+                            }
+                        }
+                    }
+
+                    listaAmigos = listaAmigosGames;
+                }
+
+
 
                 if (listaAmigos.isEmpty()){
                     TextView nenhum = view.findViewById(R.id.nenhum_text_view);

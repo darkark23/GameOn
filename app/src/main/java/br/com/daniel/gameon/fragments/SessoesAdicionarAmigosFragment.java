@@ -184,6 +184,7 @@ public class SessoesAdicionarAmigosFragment extends Fragment {
     public void carregarBotaoAdicionar(){
 
         FloatingActionButton btn =(FloatingActionButton) view.findViewById(R.id.adicionarAmigosButton);
+        btn.setVisibility(View.GONE);
 
         btn.setOnClickListener( new View.OnClickListener(){
 
