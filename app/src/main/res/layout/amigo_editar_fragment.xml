@@ -18,26 +18,27 @@
         app:srcCompat="@drawable/side_nav_bar" />
 
     <TextView
-        android:id="@+id/nome_usuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Procurando jogadores que jogam o jogo 01"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.576" />
-
-    <TextView
         android:id="@+id/frase_usuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Jogador 01"
+        android:text="Carregando..."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.529" />
+        app:layout_constraintVertical_bias="0.534" />
+
+    <TextView
+        android:id="@+id/nome_usuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Carregando..."
+        android:textColor="#FFFFFF"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imagem_usuario"
@@ -58,11 +59,11 @@
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="368dp"
-        android:layout_height="119dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="135dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:shrinkColumns="*"
         android:stretchColumns="*"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -118,7 +119,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="20:00h ás 21:00h"
+                android:text="00:00h ás 00:00h"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="322dp" />
 
@@ -127,7 +130,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="20:00h ás 21:00h"
+                android:text="00:00h ás 00:00h"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="322dp" />
 
@@ -136,7 +141,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="20:00h ás 21:00h"
+                android:text="00:00h ás 00:00h"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="322dp" />
 
@@ -145,7 +152,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="20:00h ás 21:00h"
+                android:text="00:00h ás 00:00h"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="322dp" />
 
@@ -189,7 +198,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="20:00h ás 21:00h"
+                android:text="00:00h ás 00:00h"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="322dp" />
 
@@ -198,7 +209,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="20:00h ás 21:00h"
+                android:text="00:00h ás 00:00h"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="322dp" />
 
@@ -207,7 +220,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="20:00h ás 21:00h"
+                android:text="00:00h ás 00:00h"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="322dp" />
 
@@ -225,6 +240,7 @@
         android:text="Remover da Lista de Amigos"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout"
         app:layout_constraintVertical_bias="0.0" />
@@ -240,6 +256,7 @@
         android:text="Voltar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout"
         app:layout_constraintVertical_bias="1.0" />

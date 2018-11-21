@@ -1,9 +1,11 @@
 package br.com.daniel.gameon.activities;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,23 +14,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import br.com.daniel.gameon.entity.Usuario;
 import br.com.daniel.gameon.fragments.AmigosFragment;
 import br.com.daniel.gameon.fragments.GamesFragment;
 import br.com.daniel.gameon.fragments.PerfilFragment;
 import br.com.daniel.gameon.R;
 import br.com.daniel.gameon.fragments.SessoesFragment;
+import br.com.daniel.gameon.util.DownloadImagemUtil;
 
 public class MenuPrincipalActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         FragmentManager fragmentManager = getFragmentManager();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -42,9 +56,12 @@ public class MenuPrincipalActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View hView = navigationView.getHeaderView(0);
+
+        carregarUsuario(hView);
 
         fragmentManager.beginTransaction().
-                replace(R.id.content_frame,new PerfilFragment()).commit();
+                replace(R.id.content_frame,new PerfilFragment()).addToBackStack("MenuPrincipal").commit();
 
     }
 
@@ -88,16 +105,16 @@ public class MenuPrincipalActivity extends AppCompatActivity
         FragmentManager fragmentManager = getFragmentManager();
         if (id == R.id.item_amigo) {
             fragmentManager.beginTransaction().
-                    replace(R.id.content_frame,new AmigosFragment()).commit();
+                    replace(R.id.content_frame,new AmigosFragment()).addToBackStack("AmigosFragment").commit();
         } else if (id == R.id.item_games) {
             fragmentManager.beginTransaction().
-                    replace(R.id.content_frame,new GamesFragment()).commit();
+                    replace(R.id.content_frame,new GamesFragment()).addToBackStack("GamesFragment").commit();
         } else if (id == R.id.item_sessoes_jogos) {
             fragmentManager.beginTransaction().
-                    replace(R.id.content_frame,new SessoesFragment()).commit();
+                    replace(R.id.content_frame,new SessoesFragment()).addToBackStack("SessoesFragment").commit();
         } else if (id == R.id.item_perfil) {
             fragmentManager.beginTransaction().
-                    replace(R.id.content_frame,new PerfilFragment()).commit();
+                    replace(R.id.content_frame,new PerfilFragment()).addToBackStack("PerfilFragment").commit();
         } else if (id == R.id.item_sair) {
             onSignOut();
         } else if (id == R.id.item_configuracaoes) {
@@ -116,6 +133,39 @@ public class MenuPrincipalActivity extends AppCompatActivity
         mAuth.signOut();
         Intent intent = new Intent(MenuPrincipalActivity.this, LoginActivity.class);
         startActivity( intent );
+    }
+
+    public void carregarUsuario(View hView){
+
+        String idAutenticacaoUsuario = firebaseAuth.getCurrentUser().getUid();
+
+        final TextView fraseUsuario = hView.findViewById(R.id.frase_usuario);
+        final ImageView imagemUsuario = hView.findViewById(R.id.imagem_usuario);
+        final TextView nomeUsuario = hView.findViewById(R.id.nome_usuario);
+
+        databaseReference.child("usuarios").orderByChild("idAutenticacao").equalTo(idAutenticacaoUsuario)
+                .addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                        Usuario usuario = children.iterator().next().getValue(Usuario.class);
+
+                        fraseUsuario.setText(usuario.getFrase());
+                        nomeUsuario.setText(usuario.getNomeUsuario());
+                        if (usuario.getUrlImagem()!= null){
+                            new DownloadImagemUtil(imagemUsuario).execute(usuario.getUrlImagem());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+
+                });
+
     }
 
 }

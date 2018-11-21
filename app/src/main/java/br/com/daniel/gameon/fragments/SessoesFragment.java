@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -42,10 +44,11 @@ public class SessoesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         verificaAutenticacao();
-
+        getActivity().setTitle("Sessões");
         view = inflater.inflate(R.layout.sessoes_fragment,container,false);
 
         carregarBotaoAdicionar();
+        carregarBotaoVoltar();
         carregarUsuario();
 
         return view;
@@ -105,6 +108,12 @@ public class SessoesFragment extends Fragment {
 
                 }
 
+
+                if (listaSessoes.isEmpty()){
+                    TextView nenhum = view.findViewById(R.id.nenhum_text_view);
+                    nenhum.setText("Você não faz parte de nenhuma sessão!");
+                }
+
                 initRecyclerView(listaSessoes);
 
             }
@@ -119,7 +128,7 @@ public class SessoesFragment extends Fragment {
 
     public void initRecyclerView(List<Sessao> listaSessao){
         RecyclerView recyclerView = view.findViewById(R.id.sessao_recycler_view);
-        RecyclerView.Adapter adapter = new SessaoAdapter(listaSessao,view.getContext());
+        RecyclerView.Adapter adapter = new SessaoAdapter(listaSessao,view.getContext(),getFragmentManager(),1);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
@@ -142,6 +151,34 @@ public class SessoesFragment extends Fragment {
     }
 
     public void carregarBotaoAdicionar(){
+        FloatingActionButton btn =(FloatingActionButton) view.findViewById(R.id.sessao_botao_adicionar);
+
+        btn.setOnClickListener( new View.OnClickListener(){
+
+            public void onClick(View view) {
+
+                getFragmentManager().beginTransaction().
+                        replace(R.id.content_frame, new SessoesProcuraFragment()).addToBackStack("SessoesProcuraFragment").commit();
+
+            }
+
+        });
+    }
+
+    public void carregarBotaoVoltar(){
+
+        FloatingActionButton btn =(FloatingActionButton) view.findViewById(R.id.botao_voltar);
+
+        btn.setOnClickListener( new View.OnClickListener(){
+
+            public void onClick(View view) {
+
+                getFragmentManager().beginTransaction().
+                        replace(R.id.content_frame, new PerfilFragment()).addToBackStack("PerfilFragment").commit();
+
+            }
+
+        });
 
     }
 }

@@ -11,6 +11,7 @@ public class Usuario implements Serializable {
     private String idImagem;
     private String idUsuario;
     private String idHorarios;
+    private String urlImagem;
     private String nomeUsuario;
     private String dataNascimento;
     private String sexo;
@@ -47,6 +48,14 @@ public class Usuario implements Serializable {
         this.nomeComlpeto = nomeComlpeto;
         this.frase = frase;
         this.amigos = amigos;
+    }
+
+    public String getUrlImagem() {
+        return urlImagem;
+    }
+
+    public void setUrlImagem(String urlImagem) {
+        this.urlImagem = urlImagem;
     }
 
     public String getIdAutenticacao() {

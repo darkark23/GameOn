@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,10 +27,13 @@ import java.util.List;
 import br.com.daniel.gameon.R;
 import br.com.daniel.gameon.activities.MenuPrincipalActivity;
 import br.com.daniel.gameon.adapter.AmigoAdapter;
+import br.com.daniel.gameon.adapter.JogoAdapter;
 import br.com.daniel.gameon.entity.Jogo;
 import br.com.daniel.gameon.entity.Usuario;
 
-public class AmigosFragment extends Fragment {
+public class GamesResultadoPesquisaFragment extends Fragment {
+
+    private  String nomePesquisa;
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -41,10 +45,9 @@ public class AmigosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         verificaAutenticacao();
-        getActivity().setTitle("Amigos");
-        view = inflater.inflate(R.layout.amigos_fragment, container, false);
-
-        carregarBotaoAdicionar();
+        getActivity().setTitle("Games - Resutado games");
+        view = inflater.inflate(R.layout.games_resultado_pesquisa_fragment, container, false);
+        nomePesquisa = getArguments().getString("nomePesquisa");
         carregarBotaoVoltar();
         carregarUsuario();
 
@@ -64,7 +67,7 @@ public class AmigosFragment extends Fragment {
 
                         Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                         Usuario usuario = children.iterator().next().getValue(Usuario.class);
-                        getAmigos(usuario.getAmigos());
+                        getAmigos(usuario.getJogos());
 
                     }
 
@@ -77,40 +80,42 @@ public class AmigosFragment extends Fragment {
 
     }
 
-    public void getAmigos(final List<String> listaIdAmigos){
+    public void getAmigos(final List<String> listaJogosRegistrados){
 
 
-        databaseReference.child("usuarios").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("jogos").orderByChild("nome").startAt(nomePesquisa).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                final List<Usuario> listaAmigos = new ArrayList<Usuario>();
+                final List<Jogo> listaJogos = new ArrayList<Jogo>();
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
                 for (DataSnapshot child: children) {
+                    boolean repetido = false;
+                    Jogo jogo = child.getValue(Jogo.class);
 
-                    Usuario usuario = child.getValue(Usuario.class);
-
-                    for (String id:listaIdAmigos){
-
+                    for (String id:listaJogosRegistrados){
                         if (id != null){
-                            if (id.equals(usuario.getIdUsuario())){
-                                listaAmigos.add(usuario);
+                            if (id.equals(jogo.getIdJogo())){
+                                repetido = true;
                                 break;
                             }
                         }
+                    }
 
+                    if (!repetido){
+                        listaJogos.add(jogo);
                     }
 
                 }
 
-                if (listaAmigos.isEmpty()){
+                if (listaJogos.isEmpty()){
                     TextView nenhum = view.findViewById(R.id.nenhum_text_view);
-                    nenhum.setText("Você não tem nenhum amigo registrado!");
+                    nenhum.setText("Não existe nenhum game que atenda o filtro infotmado!");
                 }
 
-                initRecyclerView(listaAmigos);
+                initRecyclerView(listaJogos);
 
             }
 
@@ -122,49 +127,12 @@ public class AmigosFragment extends Fragment {
         });
     }
 
+    public void initRecyclerView(List<Jogo> listaJogos){
 
-
-
-    public void initRecyclerView(List<Usuario> listaAmigos){
-
-        RecyclerView recyclerView = view.findViewById(R.id.amigo_recycler_view);
-        RecyclerView.Adapter adapter = new AmigoAdapter(listaAmigos,view.getContext(),getFragmentManager(),1);
+        RecyclerView recyclerView = view.findViewById(R.id.game_resutado_pesquisa_recycler_view);
+        RecyclerView.Adapter adapter = new JogoAdapter(listaJogos,view.getContext(),getFragmentManager(),2);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
-    }
-
-    public void verificaAutenticacao(){
-
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-
-                if (firebaseAuth.getCurrentUser() != null){
-                    startActivity( new Intent(view.getContext(), MenuPrincipalActivity.class));
-                }
-
-            }
-
-        };
-
-    }
-
-    public void carregarBotaoAdicionar(){
-
-        FloatingActionButton btn =(FloatingActionButton) view.findViewById(R.id.adicionarAmigosButton);
-
-        btn.setOnClickListener( new View.OnClickListener(){
-
-            public void onClick(View view) {
-
-                getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, new AmigoProcuraFragment()).addToBackStack("AmigoProcuraFragment").commit();
-
-            }
-
-        });
 
     }
 
@@ -177,11 +145,30 @@ public class AmigosFragment extends Fragment {
             public void onClick(View view) {
 
                 getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, new PerfilFragment()).addToBackStack("PerfilFragment").commit();
+                        replace(R.id.content_frame, new GamesProcuraFragment()).addToBackStack("GamesProcuraFragment").commit();
 
             }
 
         });
+
+    }
+
+    public void verificaAutenticacao(){
+
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
+                if (firebaseAuth.getCurrentUser() != null){
+
+                    startActivity( new Intent(view.getContext(), MenuPrincipalActivity.class));
+
+                }
+
+            }
+
+        };
 
     }
 

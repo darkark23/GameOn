@@ -26,27 +26,33 @@ import java.util.List;
 import br.com.daniel.gameon.R;
 import br.com.daniel.gameon.activities.MenuPrincipalActivity;
 import br.com.daniel.gameon.adapter.AmigoAdapter;
-import br.com.daniel.gameon.entity.Jogo;
+import br.com.daniel.gameon.entity.Sessao;
 import br.com.daniel.gameon.entity.Usuario;
 
-public class AmigosFragment extends Fragment {
+public class SessoesAdicionarAmigosFragment extends Fragment {
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseAuth.AuthStateListener authStateListener;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private View view;
+    private String sessaoIdAtual;
+    private Sessao sessaoAtual;
+    private Usuario usuarioAtual;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
+        sessaoIdAtual = getArguments().getString("idSessaoAtual");
+
         verificaAutenticacao();
-        getActivity().setTitle("Amigos");
+        getActivity().setTitle("Sessões - Adicionar usuário a sessão");
         view = inflater.inflate(R.layout.amigos_fragment, container, false);
 
         carregarBotaoAdicionar();
         carregarBotaoVoltar();
         carregarUsuario();
+
 
         return view;
 
@@ -63,8 +69,30 @@ public class AmigosFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                         Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                        Usuario usuario = children.iterator().next().getValue(Usuario.class);
-                        getAmigos(usuario.getAmigos());
+                        usuarioAtual = children.iterator().next().getValue(Usuario.class);
+                        carregarSessao();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+
+                });
+
+    }
+
+    public void carregarSessao(){
+
+        databaseReference.child("sessoes").orderByChild("idSessao").equalTo(sessaoIdAtual)
+                .addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                        sessaoAtual = children.iterator().next().getValue(Sessao.class);
+                        carregarUsuarios();
 
                     }
 
@@ -77,7 +105,8 @@ public class AmigosFragment extends Fragment {
 
     }
 
-    public void getAmigos(final List<String> listaIdAmigos){
+
+    public void carregarUsuarios(){
 
 
         databaseReference.child("usuarios").addValueEventListener(new ValueEventListener() {
@@ -92,12 +121,13 @@ public class AmigosFragment extends Fragment {
 
                     Usuario usuario = child.getValue(Usuario.class);
 
-                    for (String id:listaIdAmigos){
+                    for (String id:usuarioAtual.getAmigos()){
 
                         if (id != null){
                             if (id.equals(usuario.getIdUsuario())){
-                                listaAmigos.add(usuario);
-                                break;
+                                if (!id.equals(usuarioAtual.getIdUsuario())){
+                                    listaAmigos.add(usuario);
+                                }
                             }
                         }
 
@@ -107,7 +137,7 @@ public class AmigosFragment extends Fragment {
 
                 if (listaAmigos.isEmpty()){
                     TextView nenhum = view.findViewById(R.id.nenhum_text_view);
-                    nenhum.setText("Você não tem nenhum amigo registrado!");
+                    nenhum.setText("Não existe nenhum jogador que possa ser adicionado na sessão!");
                 }
 
                 initRecyclerView(listaAmigos);
@@ -128,7 +158,7 @@ public class AmigosFragment extends Fragment {
     public void initRecyclerView(List<Usuario> listaAmigos){
 
         RecyclerView recyclerView = view.findViewById(R.id.amigo_recycler_view);
-        RecyclerView.Adapter adapter = new AmigoAdapter(listaAmigos,view.getContext(),getFragmentManager(),1);
+        RecyclerView.Adapter adapter = new AmigoAdapter(listaAmigos,view.getContext(),getFragmentManager(),4,sessaoAtual.getIdSessao(),usuarioAtual.getIdUsuario());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
@@ -154,13 +184,20 @@ public class AmigosFragment extends Fragment {
     public void carregarBotaoAdicionar(){
 
         FloatingActionButton btn =(FloatingActionButton) view.findViewById(R.id.adicionarAmigosButton);
+        btn.setVisibility(View.GONE);
 
         btn.setOnClickListener( new View.OnClickListener(){
 
             public void onClick(View view) {
 
+                Bundle bundle = new Bundle();
+                bundle.putString("idSessaoAtual",sessaoAtual.getIdSessao());
+
+                SessoesListaAmigosFragment sessoesListaAmigosFragment = new SessoesListaAmigosFragment();
+                sessoesListaAmigosFragment.setArguments(bundle);
+
                 getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, new AmigoProcuraFragment()).addToBackStack("AmigoProcuraFragment").commit();
+                        replace(R.id.content_frame, sessoesListaAmigosFragment).commit();
 
             }
 
@@ -176,8 +213,14 @@ public class AmigosFragment extends Fragment {
 
             public void onClick(View view) {
 
+                Bundle bundle = new Bundle();
+                bundle.putString("idSessaoAtual",sessaoIdAtual);
+
+                SessoesListaAmigosFragment sessoesListaAmigosFragment = new SessoesListaAmigosFragment();
+                sessoesListaAmigosFragment.setArguments(bundle);
+
                 getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, new PerfilFragment()).addToBackStack("PerfilFragment").commit();
+                        replace(R.id.content_frame, sessoesListaAmigosFragment).addToBackStack("EditarSessoesFragment").commit();
 
             }
 

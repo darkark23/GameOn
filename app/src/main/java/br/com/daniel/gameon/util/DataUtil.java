@@ -1,5 +1,8 @@
 package br.com.daniel.gameon.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public final class DataUtil {
 
     public static String formatHorario(String horario) {
@@ -67,6 +70,21 @@ public final class DataUtil {
 
     public static String setData(String dia, String mes, String ano) {
         return dia.toString() + mes.toString() + ano.toString();
+    }
+
+    public static String formatCalendarData(Calendar calendar){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return simpleDateFormat.format(calendar.getTime());
+    }
+
+    public static String formatCalendarHorario(Calendar calendar){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        return simpleDateFormat.format(calendar.getTime());
+    }
+
+    public static String formatCalendarBanco(Calendar calendar){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("ddMMyyyyHHmm");
+        return simpleDateFormat.format(calendar.getTime()) + "00";
     }
 
 }

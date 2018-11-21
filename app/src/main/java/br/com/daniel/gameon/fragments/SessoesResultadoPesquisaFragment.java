@@ -22,22 +22,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import br.com.daniel.gameon.R;
 import br.com.daniel.gameon.activities.MenuPrincipalActivity;
-import br.com.daniel.gameon.adapter.AmigoAdapter;
+import br.com.daniel.gameon.adapter.JogoAdapter;
+import br.com.daniel.gameon.adapter.SessaoAdapter;
 import br.com.daniel.gameon.entity.Jogo;
+import br.com.daniel.gameon.entity.Sessao;
 import br.com.daniel.gameon.entity.Usuario;
 
-public class AmigosResultadoPesquisaFragment extends Fragment {
+public class SessoesResultadoPesquisaFragment extends Fragment {
 
-    private String nomePesquisa;
-    private String idGame;
-    private Jogo jogo;
-    private List<Usuario> listaAmigos;
-    private List<String> listaAmigosUsuario;
-    private List<Usuario> listaAmigosGames;
+    private  String nomePesquisa;
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -49,15 +47,11 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         verificaAutenticacao();
-        getActivity().setTitle("Amigos - Resutado usuários");
-        view = inflater.inflate(R.layout.amigos_resultado_pesquisa_fragment, container, false);
+        getActivity().setTitle("Sessões - Resultado sessões");
+        view = inflater.inflate(R.layout.sessoes_resultado_pesquisa_fragment, container, false);
         nomePesquisa = getArguments().getString("nomePesquisa");
-        idGame = getArguments().getString("idGame");
-        carregarJogo();
-        carregarUsuario();
-        carregarAmigos();
         carregarBotaoVoltar();
-
+        carregarUsuario();
 
         return view;
 
@@ -75,8 +69,7 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
 
                         Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                         Usuario usuario = children.iterator().next().getValue(Usuario.class);
-                        listaAmigosUsuario = usuario.getAmigos();
-                        listaAmigosUsuario.add(usuario.getIdUsuario());
+                        getSessoes(usuario.getSessoes());
 
                     }
 
@@ -89,49 +82,50 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
 
     }
 
-    public void carregarJogo(){
-
-        if (idGame != null){
-
-        databaseReference.child("jogos").orderByChild("idJogo").equalTo(idGame).addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                jogo = children.iterator().next().getValue(Jogo.class);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-
-        });
-        }
-    }
+    public void getSessoes(final List<String> listaSessoesRegistrados){
 
 
-    public void carregarAmigos(){
+        databaseReference.child("sessoes").orderByChild("nomeSessao").startAt(nomePesquisa).addValueEventListener(new ValueEventListener() {
 
 
-        databaseReference.child("usuarios").orderByChild("nomeUsuario").startAt(nomePesquisa).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                listaAmigos = new ArrayList<Usuario>();
-                listaAmigosGames = new ArrayList<Usuario>();
+                Calendar dataAtual = Calendar.getInstance();
+                Calendar dataFim = Calendar.getInstance();
+
+                final List<Sessao> listaSessoes = new ArrayList<Sessao>();
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
                 for (DataSnapshot child: children) {
                     boolean repetido = false;
-                    Usuario usuario = child.getValue(Usuario.class);
+                    Sessao sessao = child.getValue(Sessao.class);
 
-                    for (String id:listaAmigosUsuario){
+                    if (sessao.getPublico() == false){
+                        repetido = true;
+                    }
+
+
+                    String dataFimString = sessao.getDataFim();
+                    dataFim.set(Integer.valueOf(dataFimString.substring(4,8)),
+                            Integer.valueOf(dataFimString.substring(2,4)),
+                            Integer.valueOf(dataFimString.substring(0,2)),
+                            Integer.valueOf(dataFimString.substring(8,10)),
+                            Integer.valueOf(dataFimString.substring(10,12)),
+                            Integer.valueOf(dataFimString.substring(12,14)));
+
+                    if(dataAtual.after(dataFim)){
+                        repetido = true;
+                    }
+
+                    if (sessao.getPublico() == false){
+                        repetido = true;
+                    }
+
+                    for (String id:listaSessoesRegistrados){
                         if (id != null){
-                            if (id.equals(usuario.getIdUsuario())){
+                            if (id.equals(sessao.getIdSessao())){
                                 repetido = true;
                                 break;
                             }
@@ -139,32 +133,17 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
                     }
 
                     if (!repetido){
-                        listaAmigos.add(usuario);
+                        listaSessoes.add(sessao);
                     }
 
                 }
 
-                if (idGame != null){
-
-                    for (String idJogadores: jogo.getJogadores()) {
-                        for (Usuario usuario:listaAmigos){
-                            if (usuario.getIdUsuario().equals(idJogadores)){
-                                listaAmigosGames.add(usuario);
-                            }
-                        }
-                    }
-
-                    listaAmigos = listaAmigosGames;
-                }
-
-
-
-                if (listaAmigos.isEmpty()){
+                if (listaSessoes.isEmpty()){
                     TextView nenhum = view.findViewById(R.id.nenhum_text_view);
-                    nenhum.setText("Não existe nenhum jogoador que atenda o filtro infotmado!");
+                    nenhum.setText("Não existe nenhuma sessão que atenda o filtro infotmado!");
                 }
 
-                initRecyclerView(listaAmigos);
+                initRecyclerView(listaSessoes);
 
             }
 
@@ -176,10 +155,10 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
         });
     }
 
-    public void initRecyclerView(List<Usuario> listaAmigos){
+    public void initRecyclerView(List<Sessao> listaSessoes){
 
-        RecyclerView recyclerView = view.findViewById(R.id.amigo_resutado_pesquisa_recycler_view);
-        RecyclerView.Adapter adapter = new AmigoAdapter(listaAmigos,view.getContext(),getFragmentManager(),2);
+        RecyclerView recyclerView = view.findViewById(R.id.sessoes_resutado_pesquisa_recycler_view);
+        RecyclerView.Adapter adapter = new SessaoAdapter(listaSessoes,view.getContext(),getFragmentManager(),2);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
@@ -194,7 +173,7 @@ public class AmigosResultadoPesquisaFragment extends Fragment {
             public void onClick(View view) {
 
                 getFragmentManager().beginTransaction().
-                        replace(R.id.content_frame, new AmigoProcuraFragment()).addToBackStack("AmigoProcuraFragment").commit();
+                        replace(R.id.content_frame, new SessoesProcuraFragment()).addToBackStack("SessoesProcuraFragment").commit();
 
             }
 

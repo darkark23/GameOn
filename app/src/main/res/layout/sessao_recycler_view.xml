@@ -8,50 +8,46 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_toRightOf="@id/imagem_sessao">
+        android:layout_toRightOf="@id/imagem_jogo">
 
-        <TableRow
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/nome_sessao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NomeSessao"
+                android:text="Carregando..."
                 android:textSize="17sp" />
-        </TableRow>
 
-        <TableRow
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" >
+            android:layout_height="wrap_content">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+            <TextView
+                android:id="@+id/nome_jogo_sessao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carregando..."
+                android:textSize="17sp" />
 
-                <TextView
-                    android:id="@+id/nome_jogo_sessao"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="NomeJogo"
-                    android:textSize="17sp" />
-            </TableRow>
+        </LinearLayout>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/encerrado_sessao"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="ativa"
-                    android:textSize="17sp" />
-            </TableRow>
+            <TextView
+                android:id="@+id/encerrado_sessao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carregando..."
+                android:textSize="17sp" />
 
-        </TableRow>
+        </LinearLayout>
 
         <TableRow
             android:layout_width="wrap_content"
@@ -59,39 +55,36 @@
 
             <TableRow
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" >
+                android:layout_height="wrap_content" >
 
                 <TextView
                     android:id="@+id/inicio_sessao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="dd/mm/aaaaa"
+                    android:text="Carregando..."
                     android:textSize="17sp" />
             </TableRow>
 
             <TableRow
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/fim_sessao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="dd/mm/aaaaa"
                     android:layout_marginLeft="15dp"
+                    android:text="Carregando..."
                     android:textSize="17sp" />
             </TableRow>
         </TableRow>
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
     </TableLayout>
 
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:id="@+id/imagem_sessao"
+        android:id="@+id/imagem_jogo"
         android:src="@mipmap/ic_launcher"/>
 
 

@@ -3,6 +3,7 @@ package br.com.daniel.gameon.entity;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -15,7 +16,7 @@ public class Sessao {
     private String nomeSessao;
     private String dataInicio;
     private String dataFim;
-    private List<String> usuarios;
+    private List<String> usuarios = new ArrayList<>();
     private String ativo;
     private Boolean publico;
 

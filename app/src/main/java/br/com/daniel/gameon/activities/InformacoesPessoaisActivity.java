@@ -31,7 +31,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import br.com.daniel.gameon.Manifest;
 import br.com.daniel.gameon.R;
 import br.com.daniel.gameon.entity.Horarios;
 import br.com.daniel.gameon.entity.Jogo;

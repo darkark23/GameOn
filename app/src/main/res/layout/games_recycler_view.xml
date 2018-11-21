@@ -9,14 +9,15 @@
         android:layout_height="80dp"
         android:id="@+id/imagem_jogo"
         android:src="@mipmap/ic_launcher"/>
+
     <TextView
+        android:id="@+id/nome_jogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/nome_jogo"
-        android:text="NomeJogo"
-        android:layout_toRightOf="@id/imagem_jogo"
         android:layout_centerVertical="true"
         android:layout_marginLeft="30dp"
-        android:textSize="17sp"/>
+        android:layout_toRightOf="@id/imagem_jogo"
+        android:text="Carregando..."
+        android:textSize="17sp" />
 
 </RelativeLayout>

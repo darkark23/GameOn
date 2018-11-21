@@ -22,7 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MenuPrincipalActivity" />
+        <activity android:name=".activities.MenuPrincipalActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activities.CadastroActivity" />
 
         <meta-data
