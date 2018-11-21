@@ -137,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             View view = null;
-                            openMenu(view);
+                            openRegisterMoreInformations(view);
                         }
                     }
                 });
@@ -150,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     View view = null;
-                    openMenu(view);
+                    openRegisterMoreInformations(view);
                 }
             }
         });
@@ -158,6 +158,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public void openRegisterUser(View view){
         Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
+
+        startActivity( intent );
+    }
+
+    public void openRegisterMoreInformations(View view){
+        Intent intent = new Intent(LoginActivity.this, InformacoesPessoaisActivity.class);
 
         startActivity( intent );
     }

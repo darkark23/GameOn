@@ -18,12 +18,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import br.com.daniel.gameon.entity.Usuario;
 import br.com.daniel.gameon.fragments.AmigosFragment;
@@ -37,6 +41,7 @@ public class MenuPrincipalActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     @Override
@@ -156,6 +161,19 @@ public class MenuPrincipalActivity extends AppCompatActivity
                         nomeUsuario.setText(usuario.getNomeUsuario());
                         if (usuario.getUrlImagem()!= null){
                             new DownloadImagemUtil(imagemUsuario).execute(usuario.getUrlImagem());
+                        }else{
+                            StorageReference ref = storage.getReference().child(usuario.getIdImagem());
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    new DownloadImagemUtil(imagemUsuario).execute(uri.toString());
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle any errors
+                                }
+                            });
                         }
                     }
 

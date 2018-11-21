@@ -58,8 +58,8 @@ public class InformacoesPessoaisActivity extends AppCompatActivity {
 
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    DatabaseReference databaseReference = firebaseDatabase.getReference();
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,9 +192,8 @@ public class InformacoesPessoaisActivity extends AppCompatActivity {
         end.add("230000");
         horarios.setHoariosInicio(inicio);
         horarios.setHoariosFim(end);
-        horarios.setObservacao("babebabe do pirulaibe");
+        horarios.setObservacao("Domingo dia do descanso!");
         horarios.setIdUsuario(id);
-        databaseReference.child("usuarios").child(id).setValue(usuario);
         databaseReference.child("horarios").child(id2).setValue(horarios);
 
         bundle.putSerializable("user", usuario);

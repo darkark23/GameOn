@@ -1,5 +1,6 @@
 package br.com.daniel.gameon.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,20 +23,27 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import br.com.daniel.gameon.R;
+import br.com.daniel.gameon.entity.Usuario;
 
 public class InformacoesGamerActivity extends AppCompatActivity {
 
-    ArrayList<String> gameNames = new ArrayList<String>();
-    ArrayList<String> selectedGames = new ArrayList<String>();
-    Map games;
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference();
+
+    private ArrayList<String> gameNames = new ArrayList<String>();
+    private ArrayList<String> selectedGames = new ArrayList<String>();
+    private Map games;
+
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_informacoes_gamer);
 
-//        Intent intent = getIntent();
-//        Bundle bundle = getIntent().getExtras();
+        Intent intent = getIntent();
+        Bundle bundle = getIntent().getExtras();
+        usuario = (Usuario) bundle.get("user");
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("jogos");
         ref.addListenerForSingleValueEvent(
@@ -104,8 +112,15 @@ public class InformacoesGamerActivity extends AppCompatActivity {
         });
     }
 
-    public void showSelectedItems(View view){
+    public void save(View view){
+        usuario.setJogos(selectedGames);
+        databaseReference.child("usuarios").child(usuario.getIdUsuario()).setValue(usuario);
+        Toast.makeText(this, "Usuário cadastrado com sucesso!", Toast.LENGTH_LONG).show();
+        openMenu(view);
+    }
 
-        Toast.makeText(this, "creu", Toast.LENGTH_LONG).show();
+    public void openMenu(View view){
+        Intent intent = new Intent(InformacoesGamerActivity.this, MenuPrincipalActivity.class);
+        startActivity( intent );
     }
 }

@@ -8,8 +8,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/fundo"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-        android:padding="5sp"
+        android:padding="10sp"
         />
 
 </android.support.constraint.ConstraintLayout>
