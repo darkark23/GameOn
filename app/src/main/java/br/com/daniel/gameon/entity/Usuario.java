@@ -1,16 +1,21 @@
 package br.com.daniel.gameon.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Usuario {
+public class Usuario implements Serializable {
 
     private String idAutenticacao;
     private String idImagem;
     private String idUsuario;
     private String idHorarios;
     private String nomeUsuario;
+    private String dataNascimento;
+    private String sexo;
+    private String endereco;
+    private String telefone;
     private String nomeComlpeto;
     private String frase;
     private List<String> amigos = new ArrayList<>();
@@ -124,6 +129,22 @@ public class Usuario {
         this.sessoes = sessoes;
     }
 
+    public String getDataNascimento() { return dataNascimento; }
+
+    public void setDataNascimento(String dataNascimento) { this.dataNascimento = dataNascimento; }
+
+    public String getSexo() { return sexo; }
+
+    public void setSexo(String sexo) { this.sexo = sexo; }
+
+    public String getEndereco() { return endereco; }
+
+    public void setEndereco(String endereco) { this.endereco = endereco; }
+
+    public String getTelefone() { return telefone; }
+
+    public void setTelefone(String telefone) { this.telefone = telefone; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -135,6 +156,10 @@ public class Usuario {
                 Objects.equals(idHorarios, usuario.idHorarios) &&
                 Objects.equals(nomeUsuario, usuario.nomeUsuario) &&
                 Objects.equals(nomeComlpeto, usuario.nomeComlpeto) &&
+                Objects.equals(sexo, usuario.sexo) &&
+                Objects.equals(endereco, usuario.endereco) &&
+                Objects.equals(telefone, usuario.telefone) &&
+                Objects.equals(dataNascimento, usuario.dataNascimento) &&
                 Objects.equals(frase, usuario.frase) &&
                 Objects.equals(amigos, usuario.amigos) &&
                 Objects.equals(jogos, usuario.jogos) &&
@@ -144,6 +169,22 @@ public class Usuario {
     @Override
     public int hashCode() {
 
-        return Objects.hash(idAutenticacao, idImagem, idUsuario, idHorarios, nomeUsuario, nomeComlpeto, frase, amigos, jogos, sessoes);
+        return Objects.hash(
+                idAutenticacao,
+                idImagem,
+                idUsuario,
+                idHorarios,
+                nomeUsuario,
+                dataNascimento,
+                telefone,
+                endereco,
+                sexo,
+                nomeComlpeto,
+                frase,
+                amigos,
+                jogos,
+                sessoes
+        );
     }
+
 }

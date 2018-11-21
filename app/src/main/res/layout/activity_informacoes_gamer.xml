@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".activities.InformacoesGamerActivity">
+
+    <ListView
+        android:id="@+id/checkable_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+
+    </ListView>
+
+    <Button
+        android:id="@+id/btshow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/fundo_botao_login"
+        android:text="Salvar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="102dp" />
+
+</android.support.constraint.ConstraintLayout>

@@ -9,6 +9,7 @@ public class Jogo {
     private String idImagem;
     private String nome;
     private String descricao;
+    private String desenvolvedora;
     private List<String> jogadores;
 
     public Jogo() {
@@ -59,6 +60,14 @@ public class Jogo {
         this.descricao = descricao;
     }
 
+    public String getDesenvolvedora() {
+        return desenvolvedora;
+    }
+
+    public void setDesenvolvedora(String desenvolvedora) {
+        this.desenvolvedora = desenvolvedora;
+    }
+
     public List<String> getJogadores() {
         return jogadores;
     }
@@ -76,12 +85,13 @@ public class Jogo {
                 Objects.equals(idImagem, jogo.idImagem) &&
                 Objects.equals(nome, jogo.nome) &&
                 Objects.equals(descricao, jogo.descricao) &&
+                Objects.equals(desenvolvedora, jogo.desenvolvedora) &&
                 Objects.equals(jogadores, jogo.jogadores);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(idJogo, idImagem, nome, descricao, jogadores);
+        return Objects.hash(idJogo, idImagem, nome, descricao, desenvolvedora, jogadores);
     }
 }
